@@ -5,7 +5,8 @@ import { format, subMonths, startOfYear, isSameMonth, isSameYear } from 'date-fn
 import { useSelector } from 'react-redux';
 import getIcon from '../utils/iconUtils';
 import MainFeature from '../components/MainFeature';
-import { fetchExpenses, deleteExpense } from '../services/expenseService';
+import { deleteExpense } from '../services/expenseService';
+import { fetchExpensesWithFallback } from '../services/dataService';
 import { AuthContext } from '../contexts/AuthContext';
 import FloatingActionButton from '../components/FloatingActionButton';
 import BottomActionsBar from '../components/BottomActionsBar';
@@ -40,7 +41,8 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
     const loadExpenses = async () => {
       setIsLoading(true);
       try {
-        const response = await fetchExpenses();
+        // Use the dataService with fallback to sample data
+        const response = await fetchExpensesWithFallback();
         // Make sure to extract the data array from the response
         setExpenses(response.data || []);
       } catch (error) {
