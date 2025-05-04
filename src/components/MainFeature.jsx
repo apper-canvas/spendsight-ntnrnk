@@ -119,11 +119,11 @@ function MainFeature({ onAddExpense }) {
   
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 5 }}
       animate={{ opacity: 1, y: 0 }}
       className="max-w-3xl mx-auto"
     >
-      <div className="card p-4 relative overflow-hidden">
+      <div className="card p-2 relative overflow-hidden">
         {/* Success overlay */}
         <AnimatePresence>
           {submitSuccess && (
@@ -137,107 +137,110 @@ function MainFeature({ onAddExpense }) {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-3"
+                className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-2"
               >
-                <CheckCircleIcon className="w-8 h-8 text-green-500 dark:text-green-400" />
+                <CheckCircleIcon className="w-5 h-5 text-green-500 dark:text-green-400" />
               </motion.div>
-              <h3 className="text-lg font-semibold text-surface-900 dark:text-white mb-1">
+              <h3 className="text-sm font-semibold text-surface-900 dark:text-white mb-0.5">
                 Expense Added!
               </h3>
-              <p className="text-sm text-surface-600 dark:text-surface-400">
-                Your expense has been successfully recorded.
+              <p className="text-2xs text-surface-600 dark:text-surface-400">
+                Your expense has been recorded.
               </p>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <h2 className="text-lg font-bold text-surface-900 dark:text-white mb-4 flex items-center">
-          <ReceiptIcon className="w-5 h-5 mr-2 text-primary dark:text-primary-light" />
+        <h2 className="text-sm font-bold text-surface-900 dark:text-white mb-2 flex items-center">
+          <ReceiptIcon className="w-4 h-4 mr-1 text-primary dark:text-primary-light" />
           New Expense
         </h2>
         
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Description field */}
-            <div className="space-y-1">
-              <label htmlFor="description" className="block text-xs font-medium text-surface-700 dark:text-surface-300">
-                Description
-              </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  id="description"
-                  className={`input py-1.5 pl-8 text-sm ${errors.description ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''}`}
-                  placeholder="What did you spend on?"
-                  value={description}
-                  onChange={(e) => {
-                    setDescription(e.target.value);
-                    if (errors.description) {
-                      setErrors({ ...errors, description: undefined });
-                    }
-                  }}
-                  disabled={isSubmitting}
-                />
-                <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
-                  <span className="text-surface-500 dark:text-surface-400">
-                    <ReceiptIcon className="h-4 w-4" />
-                  </span>
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <div className="space-y-2">
+            {/* Description & Amount */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {/* Description field */}
+              <div className="space-y-0.5">
+                <label htmlFor="description" className="block text-2xs font-medium text-surface-700 dark:text-surface-300">
+                  Description
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="description"
+                    className={`input-compact w-full ${errors.description ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''}`}
+                    placeholder="What did you spend on?"
+                    value={description}
+                    onChange={(e) => {
+                      setDescription(e.target.value);
+                      if (errors.description) {
+                        setErrors({ ...errors, description: undefined });
+                      }
+                    }}
+                    disabled={isSubmitting}
+                  />
+                  <div className="absolute inset-y-0 left-0 pl-1.5 flex items-center pointer-events-none">
+                    <span className="text-surface-500 dark:text-surface-400">
+                      <ReceiptIcon className="h-3 w-3" />
+                    </span>
+                  </div>
                 </div>
+                {errors.description && (
+                  <p className="text-2xs text-red-500 flex items-center mt-0.5">
+                    <AlertCircleIcon className="w-2.5 h-2.5 mr-0.5" />
+                    {errors.description}
+                  </p>
+                )}
               </div>
-              {errors.description && (
-                <p className="text-xs text-red-500 flex items-center mt-0.5">
-                  <AlertCircleIcon className="w-3 h-3 mr-1" />
-                  {errors.description}
-                </p>
-              )}
-            </div>
-            
-            {/* Amount field */}
-            <div className="space-y-1">
-              <label htmlFor="amount" className="block text-xs font-medium text-surface-700 dark:text-surface-300">
-                Amount
-              </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  id="amount"
-                  className={`input py-1.5 pl-8 text-sm ${errors.amount ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''}`}
-                  placeholder="0.00"
-                  value={amount}
-                  onChange={(e) => {
-                    // Allow only numbers and decimal point
-                    const value = e.target.value.replace(/[^0-9.]/g, '');
-                    setAmount(value);
-                    if (errors.amount) {
-                      setErrors({ ...errors, amount: undefined });
-                    }
-                  }}
-                  disabled={isSubmitting}
-                />
-                <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
-                  <span className="text-surface-500 dark:text-surface-400">
-                    <RupeeIcon className="h-4 w-4" />
-                  </span>
+              
+              {/* Amount field */}
+              <div className="space-y-0.5">
+                <label htmlFor="amount" className="block text-2xs font-medium text-surface-700 dark:text-surface-300">
+                  Amount
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="amount"
+                    className={`input-compact w-full ${errors.amount ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''}`}
+                    placeholder="0.00"
+                    value={amount}
+                    onChange={(e) => {
+                      // Allow only numbers and decimal point
+                      const value = e.target.value.replace(/[^0-9.]/g, '');
+                      setAmount(value);
+                      if (errors.amount) {
+                        setErrors({ ...errors, amount: undefined });
+                      }
+                    }}
+                    disabled={isSubmitting}
+                  />
+                  <div className="absolute inset-y-0 left-0 pl-1.5 flex items-center pointer-events-none">
+                    <span className="text-surface-500 dark:text-surface-400">
+                      <RupeeIcon className="h-3 w-3" />
+                    </span>
+                  </div>
                 </div>
+                {errors.amount && (
+                  <p className="text-2xs text-red-500 flex items-center mt-0.5">
+                    <AlertCircleIcon className="w-2.5 h-2.5 mr-0.5" />
+                    {errors.amount}
+                  </p>
+                )}
               </div>
-              {errors.amount && (
-                <p className="text-xs text-red-500 flex items-center mt-0.5">
-                  <AlertCircleIcon className="w-3 h-3 mr-1" />
-                  {errors.amount}
-                </p>
-              )}
             </div>
-          
+        
             {/* Date field */}
-            <div className="space-y-1">
-              <label htmlFor="date" className="block text-xs font-medium text-surface-700 dark:text-surface-300">
+            <div className="space-y-0.5">
+              <label htmlFor="date" className="block text-2xs font-medium text-surface-700 dark:text-surface-300">
                 Date
               </label>
               <div className="relative">
                 <input
                   type="date"
                   id="date"
-                  className={`input py-1.5 pl-8 text-sm ${errors.date ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''}`}
+                  className={`input-compact w-full ${errors.date ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''}`}
                   value={date}
                   onChange={(e) => {
                     setDate(e.target.value);
@@ -248,15 +251,15 @@ function MainFeature({ onAddExpense }) {
                   max={new Date().toISOString().split('T')[0]}
                   disabled={isSubmitting}
                 />
-                <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-0 pl-1.5 flex items-center pointer-events-none">
                   <span className="text-surface-500 dark:text-surface-400">
-                    <CalendarIcon className="h-4 w-4" />
+                    <CalendarIcon className="h-3 w-3" />
                   </span>
                 </div>
               </div>
               {errors.date && (
-                <p className="text-xs text-red-500 flex items-center mt-0.5">
-                  <AlertCircleIcon className="w-3 h-3 mr-1" />
+                <p className="text-2xs text-red-500 flex items-center mt-0.5">
+                  <AlertCircleIcon className="w-2.5 h-2.5 mr-0.5" />
                   {errors.date}
                 </p>
               )}
@@ -264,13 +267,13 @@ function MainFeature({ onAddExpense }) {
           </div>
           
           {/* Category selection */}
-          <div className="space-y-1">
-            <label className="block text-xs font-medium text-surface-700 dark:text-surface-300">
+          <div className="space-y-0.5">
+            <label className="block text-2xs font-medium text-surface-700 dark:text-surface-300">
               Category
             </label>
             
-            <div className={`grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-2 
-                          ${errors.category ? 'border border-red-500 dark:border-red-500 rounded-lg p-2' : ''}`}>
+            <div className={`grid grid-cols-4 gap-1 
+                          ${errors.category ? 'border border-red-500 dark:border-red-500 rounded-lg p-1' : ''}`}>
               {defaultCategories.map((cat) => {
                 const Icon = categoryIcons[cat.id];
                 const isSelected = !showCustomCategory && category === cat.name;
@@ -279,7 +282,7 @@ function MainFeature({ onAddExpense }) {
                   <button
                     key={cat.id}
                     type="button"
-                    className={`flex flex-col items-center justify-center p-2 rounded-lg border transition-all
+                    className={`flex flex-col items-center justify-center p-1 rounded-lg border transition-all h-sm
                               ${isSelected ? 
                                 'border-primary bg-primary/5 dark:bg-primary-dark/10 shadow-sm' : 
                                 'border-surface-200 dark:border-surface-700 hover:bg-surface-50 dark:hover:bg-surface-750'}`}
@@ -287,13 +290,13 @@ function MainFeature({ onAddExpense }) {
                     disabled={isSubmitting}
                   >
                     <div 
-                      className="w-7 h-7 flex items-center justify-center rounded-full mb-1" 
+                      className="w-4 h-4 flex items-center justify-center rounded-full" 
                       style={{ backgroundColor: `${cat.color}20`, color: cat.color }}
                     >
-                      <Icon className="w-4 h-4" />
+                      <Icon className="w-2.5 h-2.5" />
                     </div>
-                    <span className="text-xs font-medium text-surface-700 dark:text-surface-300 whitespace-nowrap overflow-hidden text-ellipsis max-w-full text-center" style={{fontSize: '0.65rem'}}>
-                      {cat.name.length > 10 ? cat.name.split(' ')[0] : cat.name}
+                    <span className="text-2xs font-medium text-surface-700 dark:text-surface-300 whitespace-nowrap overflow-hidden text-ellipsis max-w-full text-center mt-0.5">
+                      {cat.name.length > 8 ? cat.name.split(' ')[0] : cat.name}
                     </span>
                   </button>
                 );
@@ -301,19 +304,19 @@ function MainFeature({ onAddExpense }) {
             </div>
             
             {errors.category && (
-              <p className="text-xs text-red-500 flex items-center mt-0.5">
-                <AlertCircleIcon className="w-3 h-3 mr-1" />
+              <p className="text-2xs text-red-500 flex items-center mt-0.5">
+                <AlertCircleIcon className="w-2.5 h-2.5 mr-0.5" />
                 {errors.category}
               </p>
             )}
             
             {/* Custom category input */}
             {showCustomCategory && (
-              <div className="mt-2">
+              <div className="mt-1">
                 <div className="relative">
                   <input
                     type="text"
-                    className={`input py-1.5 pl-8 text-sm ${errors.customCategory ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''}`}
+                    className={`input-compact w-full ${errors.customCategory ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''}`}
                     placeholder="Enter custom category"
                     value={customCategory}
                     onChange={(e) => {
@@ -324,15 +327,15 @@ function MainFeature({ onAddExpense }) {
                     }}
                     disabled={isSubmitting}
                   />
-                  <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                  <div className="absolute inset-y-0 left-0 pl-1.5 flex items-center pointer-events-none">
                     <span className="text-surface-500 dark:text-surface-400">
-                      <TagIcon className="h-4 w-4" />
+                      <TagIcon className="h-3 w-3" />
                     </span>
                   </div>
                 </div>
                 {errors.customCategory && (
-                  <p className="text-xs text-red-500 flex items-center mt-0.5">
-                    <AlertCircleIcon className="w-3 h-3 mr-1" />
+                  <p className="text-2xs text-red-500 flex items-center mt-0.5">
+                    <AlertCircleIcon className="w-2.5 h-2.5 mr-0.5" />
                     {errors.customCategory}
                   </p>
                 )}
@@ -341,17 +344,17 @@ function MainFeature({ onAddExpense }) {
           </div>
           
           {/* Submit button */}
-          <div className="pt-1">
+          <div>
             <motion.button
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
               type="submit"
-              className="w-full btn btn-primary py-2 flex items-center justify-center space-x-2 text-sm"
+              className="w-full btn-compact btn-primary flex items-center justify-center space-x-1"
               disabled={isSubmitting}
             >
               {isSubmitting ? (
                 <>
-                  <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <svg className="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
@@ -359,7 +362,7 @@ function MainFeature({ onAddExpense }) {
                 </>
               ) : (
                 <>
-                  <RupeeIcon className="w-4 h-4" />
+                  <RupeeIcon className="w-3 h-3" />
                   <span>Add Expense</span>
                 </>
               )}
@@ -368,12 +371,9 @@ function MainFeature({ onAddExpense }) {
         </form>
       </div>
       
-      <div className="mt-3 p-3 bg-surface-100/50 dark:bg-surface-800/50 rounded-xl">
-        <h3 className="text-xs font-medium text-surface-700 dark:text-surface-300 mb-1">
-          💡 Quick Tip
-        </h3>
-        <p className="text-xs text-surface-600 dark:text-surface-400">
-          Categorizing your expenses consistently helps you track spending patterns over time and identify areas where you can save.
+      <div className="mt-2 p-2 bg-surface-100/50 dark:bg-surface-800/50 rounded-lg">
+        <p className="text-2xs text-surface-600 dark:text-surface-400">
+          💡 <span className="font-medium">Tip:</span> Categorizing expenses helps track spending patterns and identify saving opportunities.
         </p>
       </div>
     </motion.div>

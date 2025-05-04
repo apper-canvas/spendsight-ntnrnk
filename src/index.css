@@ -76,11 +76,14 @@
   
   /* Compact UI elements */
   .input-compact {
-    @apply py-1 px-2 text-xs;
+    @apply py-1 px-2 text-xs pl-6 rounded-lg border border-surface-300 dark:border-surface-700 bg-white dark:bg-surface-800 
+           focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent
+           text-surface-800 dark:text-surface-200 placeholder-surface-400 
+           transition-all duration-200 h-7;
   }
   
   .btn-compact {
-    @apply py-1 px-2 text-xs;
+    @apply py-1 px-2 text-xs rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-offset-1;
   }
   
   .card-compact {
@@ -90,6 +93,27 @@
   .table-compact th,
   .table-compact td {
     @apply py-1 px-1.5 text-xs;
+  }
+
+  /* Mobile-specific compact styles */
+  .mobile-card {
+    @apply p-1.5 rounded-md shadow-sm;
+  }
+
+  .mobile-input {
+    @apply py-0.5 px-1.5 text-2xs h-6 rounded;
+  }
+
+  .mobile-badge {
+    @apply px-1 py-px text-2xs rounded;
+  }
+
+  .mobile-btn {
+    @apply py-0.5 px-1.5 text-2xs rounded;
+  }
+
+  .mobile-icon {
+    @apply w-3 h-3;
   }
 }
 
@@ -147,5 +171,55 @@
   
   .border-3 {
     border-width: 3px;
+  }
+
+  /* Ultra-compact spacing for mobile */
+  .gap-2xs {
+    gap: 0.0625rem; /* 1px */
+  }
+
+  .p-2xs {
+    padding: 0.0625rem; /* 1px */
+  }
+
+  .rounded-xs {
+    border-radius: 0.125rem;
+  }
+
+  /* Ultra compact text */
+  .text-3xs {
+    font-size: 0.6rem;
+    line-height: 0.8rem;
+  }
+
+  /* Extra small height */
+  .h-xs {
+    height: 1.25rem;
+  }
+
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .max-h-mobile {
+    max-height: calc(100vh - 10rem);
+  }
+
+  .min-w-0 {
+    min-width: 0;
+  }
+
+  .w-fit {
+    width: fit-content;
   }
 }
