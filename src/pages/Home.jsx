@@ -225,7 +225,7 @@ function Home({ isDarkMode, toggleDarkMode }) {
                   <div className="card p-4 flex flex-col">
                     <h3 className="text-sm font-medium text-surface-500 dark:text-surface-400">This Year Total</h3>
                     <p className="mt-1 text-2xl font-semibold text-surface-900 dark:text-white">
-                      ${totals.thisYear.toFixed(2)}
+                      ₹{totals.thisYear.toFixed(2)}
                     </p>
                     <div className="mt-2 text-xs text-surface-600 dark:text-surface-400">
                       {totals.thisYear > totals.lastYear ? 
@@ -244,7 +244,7 @@ function Home({ isDarkMode, toggleDarkMode }) {
                   <div className="card p-4 flex flex-col">
                     <h3 className="text-sm font-medium text-surface-500 dark:text-surface-400">Last 3 Months</h3>
                     <p className="mt-1 text-2xl font-semibold text-surface-900 dark:text-white">
-                      ${totals.last3Months.toFixed(2)}
+                      ₹{totals.last3Months.toFixed(2)}
                     </p>
                     <div className="mt-2 text-xs text-surface-600 dark:text-surface-400">
                       {expenses.length > 0 ? 
@@ -256,7 +256,7 @@ function Home({ isDarkMode, toggleDarkMode }) {
                   <div className="card p-4 flex flex-col">
                     <h3 className="text-sm font-medium text-surface-500 dark:text-surface-400">This Month Last Year</h3>
                     <p className="mt-1 text-2xl font-semibold text-surface-900 dark:text-white">
-                      ${totals.thisMonthLastYear.toFixed(2)}
+                      ₹{totals.thisMonthLastYear.toFixed(2)}
                     </p>
                     <div className="mt-2 text-xs text-surface-600 dark:text-surface-400">
                       {format(new Date(), 'MMMM yyyy')}
@@ -333,7 +333,7 @@ function Home({ isDarkMode, toggleDarkMode }) {
                             <div className="w-1/2 space-y-1">
                               <div className="flex justify-between text-sm">
                                 <span className="font-medium text-surface-800 dark:text-surface-200">
-                                  ${data.total.toFixed(2)}
+                                  ₹{data.total.toFixed(2)}
                                 </span>
                                 <span className="text-surface-500 dark:text-surface-400">
                                   {Math.round((data.total / totals.thisYear) * 100)}%
@@ -405,7 +405,7 @@ function Home({ isDarkMode, toggleDarkMode }) {
                               <span className="badge badge-primary">{expense.category}</span>
                             </td>
                             <td className="px-3 py-4 whitespace-nowrap text-sm text-right font-medium text-surface-900 dark:text-surface-100">
-                              ${expense.amount.toFixed(2)}
+                              ₹{expense.amount.toFixed(2)}
                             </td>
                             <td className="px-3 py-4 whitespace-nowrap text-right text-sm">
                               <button
@@ -507,7 +507,7 @@ function Home({ isDarkMode, toggleDarkMode }) {
                               <span className="badge badge-primary">{expense.category}</span>
                             </td>
                             <td className="px-3 py-4 whitespace-nowrap text-sm text-right font-medium text-surface-900 dark:text-surface-100">
-                              ${expense.amount.toFixed(2)}
+                              ₹{expense.amount.toFixed(2)}
                             </td>
                             <td className="px-3 py-4 whitespace-nowrap text-right text-sm">
                               <button

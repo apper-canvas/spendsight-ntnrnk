@@ -5,7 +5,7 @@ import getIcon from '../utils/iconUtils';
 
 function MainFeature({ onAddExpense }) {
   // Icons
-  const DollarSignIcon = getIcon('DollarSign');
+  const RupeeIcon = getIcon('IndianRupee');
   const TagIcon = getIcon('Tag');
   const CalendarIcon = getIcon('Calendar');
   const ReceiptIcon = getIcon('Receipt');
@@ -207,7 +207,7 @@ function MainFeature({ onAddExpense }) {
               />
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <span className="text-surface-500 dark:text-surface-400">
-                  <DollarSignIcon className="h-5 w-5" />
+                  <RupeeIcon className="h-5 w-5" />
                 </span>
               </div>
             </div>
@@ -349,7 +349,7 @@ function MainFeature({ onAddExpense }) {
                 </>
               ) : (
                 <>
-                  <DollarSignIcon className="w-5 h-5" />
+                  <RupeeIcon className="w-5 h-5" />
                   <span>Add Expense</span>
                 </>
               )}
