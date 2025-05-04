@@ -4,11 +4,17 @@ import { toast } from 'react-toastify';
 import { format, subMonths, startOfYear, isSameMonth, isSameYear } from 'date-fns';
 import getIcon from '../utils/iconUtils';
 import MainFeature from '../components/MainFeature';
+import generateSampleExpenses from '../utils/sampleData';
 
 function Home({ isDarkMode, toggleDarkMode }) {
   const [expenses, setExpenses] = useState(() => {
     const saved = localStorage.getItem('expenses');
-    return saved ? JSON.parse(saved) : [];
+    if (saved) {
+      return JSON.parse(saved);
+    } else {
+      // Generate sample data if no expenses exist
+      return generateSampleExpenses();
+    }
   });
   
   const [isLoading, setIsLoading] = useState(true);
