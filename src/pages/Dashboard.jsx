@@ -7,11 +7,17 @@ import getIcon from '../utils/iconUtils';
 import MainFeature from '../components/MainFeature';
 import { fetchExpenses, deleteExpense } from '../services/expenseService';
 import { AuthContext } from '../contexts/AuthContext';
+import FloatingActionButton from '../components/FloatingActionButton';
+import BottomActionsBar from '../components/BottomActionsBar';
 
 function Dashboard({ isDarkMode, toggleDarkMode }) {
   const [expenses, setExpenses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedPage, setSelectedPage] = useState('dashboard');
+  const [isFilterBarOpen, setIsFilterBarOpen] = useState(false);
+  const [dateFilter, setDateFilter] = useState('all');
+  const [categoryFilter, setCategoryFilter] = useState('all');
+  const [amountFilter, setAmountFilter] = useState({ min: '', max: '' });
   
   const { user } = useSelector(state => state.user);
   const { logout } = useContext(AuthContext);
@@ -27,6 +33,8 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
   const LogOutIcon = getIcon('LogOut');
   const FilterIcon = getIcon('Filter');
   const CloseIcon = getIcon('X');
+  const SortIcon = getIcon('ArrowUpDown');
+  const SearchIcon = getIcon('Search');
   
   useEffect(() => {
     const loadExpenses = async () => {
@@ -61,6 +69,20 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
       console.error("Failed to delete expense:", error);
       toast.error("Failed to delete expense");
     }
+  };
+  
+  // Filter functions
+  const resetFilters = () => {
+    setDateFilter('all');
+    setCategoryFilter('all');
+    setAmountFilter({ min: '', max: '' });
+    setIsFilterBarOpen(false);
+    toast.info("Filters reset");
+  };
+
+  const applyFilters = () => {
+    setIsFilterBarOpen(false);
+    toast.success("Filters applied");
   };
   
   // Analytics calculations
@@ -134,6 +156,9 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
     );
   }
 
+  // Define all unique categories for filter options
+  const uniqueCategories = [...new Set(expenses.map(expense => expense.category))];
+
   return (
     <div className="min-h-screen flex flex-col bg-surface-50 dark:bg-surface-900">
       {/* Compact Header */}
@@ -183,6 +208,7 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
                           ${selectedPage === 'dashboard' ? 
                             'text-primary dark:text-primary-light bg-primary/10 dark:bg-primary-dark/20' : 
                             'text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-700'}`}
+                aria-label="Dashboard"
               >
                 <HomeIcon className="w-4 h-4 shrink-0" />
                 <span className="sr-only md:not-sr-only ml-1 font-medium tracking-wide hidden lg:block text-2xs">Dashboard</span>
@@ -194,6 +220,7 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
                           ${selectedPage === 'add' ? 
                             'text-primary dark:text-primary-light bg-primary/10 dark:bg-primary-dark/20' : 
                             'text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-700'}`}
+                aria-label="Add Expense"
               >
                 <PlusIcon className="w-4 h-4 shrink-0" />
                 <span className="sr-only md:not-sr-only ml-1 font-medium tracking-wide hidden lg:block text-2xs">Add Expense</span>
@@ -205,6 +232,7 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
                           ${selectedPage === 'history' ? 
                             'text-primary dark:text-primary-light bg-primary/10 dark:bg-primary-dark/20' : 
                             'text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-700'}`}
+                aria-label="Expense History"
               >
                 <HistoryIcon className="w-4 h-4 shrink-0" />
                 <span className="sr-only md:not-sr-only ml-1 font-medium tracking-wide hidden lg:block text-2xs">History</span>
@@ -216,6 +244,7 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
                           ${selectedPage === 'settings' ? 
                             'text-primary dark:text-primary-light bg-primary/10 dark:bg-primary-dark/20' : 
                             'text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-700'}`}
+                aria-label="Settings"
               >
                 <SettingsIcon className="w-4 h-4 shrink-0" />
                 <span className="sr-only md:not-sr-only ml-1 font-medium tracking-wide hidden lg:block text-2xs">Settings</span>
@@ -226,6 +255,7 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
                   onClick={logout}
                   className="w-full flex items-center justify-center md:justify-start px-0.5 py-1 rounded-md md:rounded-lg transition-colors
                             text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-700"
+                  aria-label="Logout"
                 >
                   <LogOutIcon className="w-4 h-4 shrink-0" />
                   <span className="sr-only md:not-sr-only ml-1 font-medium tracking-wide hidden lg:block text-2xs">Logout</span>
@@ -455,7 +485,11 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
                 <h1 className="text-base font-bold text-surface-900 dark:text-white">
                   Expense History
                 </h1>
-                <button className="p-1 rounded-full bg-surface-100 dark:bg-surface-700 text-surface-600 dark:text-surface-300">
+                <button 
+                  className="p-1 rounded-full bg-surface-100 dark:bg-surface-700 text-surface-600 dark:text-surface-300"
+                  onClick={() => setIsFilterBarOpen(true)}
+                  aria-label="Filter expenses"
+                >
                   <FilterIcon className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -577,6 +611,137 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
           )}
         </main>
       </div>
+
+      {/* Floating Action Button for adding expense */}
+      {selectedPage !== 'add' && (
+        <FloatingActionButton
+          icon={<PlusIcon />}
+          label="Add Expense"
+          onClick={() => setSelectedPage('add')}
+          position="bottom-right"
+          color="primary"
+          showLabel={false}
+        />
+      )}
+
+      {/* Filter Action Button for History page */}
+      {selectedPage === 'history' && (
+        <FloatingActionButton
+          icon={<SortIcon />}
+          label="Sort Expenses"
+          onClick={() => setIsFilterBarOpen(true)}
+          position="bottom-left"
+          color="neutral"
+          size="small"
+          showLabel={false}
+        />
+      )}
+
+      {/* Bottom Filter Bar */}
+      <BottomActionsBar
+        isOpen={isFilterBarOpen}
+        onClose={() => setIsFilterBarOpen(false)}
+        title="Filter Expenses"
+        position="bottom"
+        height="auto"
+      >
+        <div className="space-y-3">
+          {/* Date filter */}
+          <div>
+            <label className="block text-xs font-medium text-surface-800 dark:text-surface-200 mb-1">
+              Date Range
+            </label>
+            <select
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+              className="block w-full rounded-md border border-surface-300 dark:border-surface-700 bg-white dark:bg-surface-800 py-1.5 text-2xs text-surface-900 dark:text-white shadow-sm focus:ring-1 focus:ring-primary focus:border-primary"
+            >
+              <option value="all">All Time</option>
+              <option value="this-month">This Month</option>
+              <option value="last-3-months">Last 3 Months</option>
+              <option value="this-year">This Year</option>
+              <option value="last-year">Last Year</option>
+              <option value="custom">Custom Range</option>
+            </select>
+          </div>
+
+          {/* Category filter */}
+          <div>
+            <label className="block text-xs font-medium text-surface-800 dark:text-surface-200 mb-1">
+              Category
+            </label>
+            <select
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              className="block w-full rounded-md border border-surface-300 dark:border-surface-700 bg-white dark:bg-surface-800 py-1.5 text-2xs text-surface-900 dark:text-white shadow-sm focus:ring-1 focus:ring-primary focus:border-primary"
+            >
+              <option value="all">All Categories</option>
+              {uniqueCategories.map(category => (
+                <option key={category} value={category}>{category}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Amount range filter */}
+          <div>
+            <label className="block text-xs font-medium text-surface-800 dark:text-surface-200 mb-1">
+              Amount Range
+            </label>
+            <div className="flex space-x-2">
+              <div className="w-1/2">
+                <label className="block text-2xs text-surface-600 dark:text-surface-400 mb-0.5">
+                  Min
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                    <span className="text-2xs text-surface-500 dark:text-surface-400">₹</span>
+                  </div>
+                  <input
+                    type="number"
+                    value={amountFilter.min}
+                    onChange={(e) => setAmountFilter({...amountFilter, min: e.target.value})}
+                    className="block w-full rounded-md pl-5 border border-surface-300 dark:border-surface-700 bg-white dark:bg-surface-800 py-1.5 text-2xs text-surface-900 dark:text-white shadow-sm focus:ring-1 focus:ring-primary focus:border-primary"
+                    placeholder="0"
+                  />
+                </div>
+              </div>
+              <div className="w-1/2">
+                <label className="block text-2xs text-surface-600 dark:text-surface-400 mb-0.5">
+                  Max
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                    <span className="text-2xs text-surface-500 dark:text-surface-400">₹</span>
+                  </div>
+                  <input
+                    type="number"
+                    value={amountFilter.max}
+                    onChange={(e) => setAmountFilter({...amountFilter, max: e.target.value})}
+                    className="block w-full rounded-md pl-5 border border-surface-300 dark:border-surface-700 bg-white dark:bg-surface-800 py-1.5 text-2xs text-surface-900 dark:text-white shadow-sm focus:ring-1 focus:ring-primary focus:border-primary"
+                    placeholder="Max"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Filter actions */}
+          <div className="flex space-x-2 pt-2">
+            <button
+              onClick={resetFilters}
+              className="flex-1 py-1.5 rounded-md border border-surface-300 dark:border-surface-700 text-surface-700 dark:text-surface-300 text-xs font-medium hover:bg-surface-50 dark:hover:bg-surface-800"
+            >
+              Reset
+            </button>
+            <button
+              onClick={applyFilters}
+              className="flex-1 py-1.5 rounded-md bg-primary text-white text-xs font-medium hover:bg-primary-dark"
+            >
+              Apply Filters
+            </button>
+          </div>
+        </div>
+      </BottomActionsBar>
     </div>
   );
 }
