@@ -18,55 +18,71 @@ function getRandomDate(start, end) {
 // Generate realistic sample data for expenses
 export function generateSampleExpenses() {
   const now = new Date();
-  const lastYear = subMonths(now, 18); // Go back 18 months to ensure we have last year data
+  const lastYear = subMonths(now, 24); // Go back 24 months to ensure we have more history
   const expenses = [];
   
   // Common descriptions for each category
   const descriptions = {
     'Food & Dining': [
       'Grocery shopping', 'Dinner at restaurant', 'Coffee shop', 'Takeout food', 
-      'Lunch at work', 'Supermarket', 'Bakery items', 'Fast food', 'Ice cream', 'Pizza delivery'
+      'Lunch at work', 'Supermarket', 'Bakery items', 'Fast food', 'Ice cream', 'Pizza delivery',
+      'Snacks', 'Food delivery', 'Brunch', 'Food truck', 'Office lunch order', 'Breakfast', 
+      'Weekly groceries', 'Monthly bulk shopping', 'Holiday dinner', 'Special occasion meal'
     ],
     'Transportation': [
       'Gas fill-up', 'Public transport pass', 'Uber ride', 'Taxi fare', 'Car maintenance', 
-      'Oil change', 'Parking fee', 'Highway toll', 'Bike repair', 'Train ticket'
+      'Oil change', 'Parking fee', 'Highway toll', 'Bike repair', 'Train ticket',
+      'Car wash', 'Vehicle registration', 'Tire replacement', 'Car insurance', 'Bus ticket',
+      'Subway pass', 'Airport shuttle', 'Rental car', 'Battery replacement', 'Car service'
     ],
     'Utilities': [
       'Electricity bill', 'Water bill', 'Internet service', 'Phone bill', 'Gas utility', 
-      'Trash service', 'Sewer bill', 'Cable TV', 'Streaming subscription', 'Home security'
+      'Trash service', 'Sewer bill', 'Cable TV', 'Streaming subscription', 'Home security',
+      'Solar panel lease', 'VPN service', 'Cloud storage', 'Smart home subscription', 'Internet upgrade',
+      'Mobile data plan', 'Landline service', 'Sewage charge', 'Water delivery', 'Satellite TV'
     ],
     'Entertainment': [
       'Movie tickets', 'Concert tickets', 'Video game', 'Streaming subscription', 'Music service', 
-      'Book purchase', 'Theme park', 'Sporting event', 'Theater tickets', 'Museum admission'
+      'Book purchase', 'Theme park', 'Sporting event', 'Theater tickets', 'Museum admission',
+      'App purchase', 'Magazine subscription', 'Board game', 'Live show', 'Cinema snacks',
+      'Bowling night', 'Arcade games', 'Online event ticket', 'Gaming subscription', 'Festival entry'
     ],
     'Shopping': [
       'Clothing purchase', 'Electronics', 'Home decor', 'Shoes', 'Accessories', 
-      'Kitchen gadgets', 'Office supplies', 'Toiletries', 'Gift for friend', 'Beauty products'
+      'Kitchen gadgets', 'Office supplies', 'Toiletries', 'Gift for friend', 'Beauty products',
+      'Furniture', 'Smartphone accessories', 'Household items', 'Tools', 'Athletic equipment',
+      'Outdoor gear', 'Seasonal decorations', 'Appliance', 'Computer accessories', 'Hobby supplies'
     ],
     'Housing': [
       'Rent payment', 'Mortgage payment', 'Home insurance', 'Property tax', 'HOA fee', 
-      'Furniture purchase', 'Home repair', 'Cleaning service', 'Lawn care', 'Home improvement'
+      'Furniture purchase', 'Home repair', 'Cleaning service', 'Lawn care', 'Home improvement',
+      'Renters insurance', 'Pest control', 'Plumbing repair', 'HVAC maintenance', 'Security system',
+      'Window cleaning', 'Carpet cleaning', 'Roof repair', 'Painting service', 'Home décor'
     ],
     'Healthcare': [
       'Doctor visit', 'Prescription medication', 'Dentist appointment', 'Eye exam', 'Health insurance premium', 
-      'Therapy session', 'Gym membership', 'Vitamins', 'Over-the-counter medicine', 'Medical test'
+      'Therapy session', 'Gym membership', 'Vitamins', 'Over-the-counter medicine', 'Medical test',
+      'Specialist consultation', 'Urgent care visit', 'Dental cleaning', 'New glasses', 'Contact lenses',
+      'Physical therapy', 'Nutritionist', 'Chiropractor', 'Medical device', 'Health supplements'
     ],
     'Education': [
       'Textbooks', 'Tuition payment', 'School supplies', 'Online course', 'Workshop fee', 
-      'Certification exam', 'Student loan payment', 'Language app subscription', 'Reference books', 'Tutoring session'
+      'Certification exam', 'Student loan payment', 'Language app subscription', 'Reference books', 'Tutoring session',
+      'Professional development', 'Conference fee', 'Education software', 'School uniform', 'Laboratory fee',
+      'Research materials', 'Education hardware', 'Art supplies', 'Student association fee', 'Study materials'
     ]
   };
   
   // Specific stores or service providers for realistic descriptions
   const providers = {
-    'Food & Dining': ['Whole Foods', 'Trader Joe\'s', 'Safeway', 'The Cheesecake Factory', 'Olive Garden', 'Chipotle', 'Starbucks', 'McDonald\'s', 'Subway', 'Local Cafe'],
-    'Transportation': ['Shell', 'Chevron', 'Exxon', 'Lyft', 'Uber', 'Metro Transit', 'Amtrak', 'Jiffy Lube', 'Discount Tire', 'Enterprise'],
-    'Utilities': ['Electric Company', 'Water Utility', 'Comcast', 'AT&T', 'Verizon', 'T-Mobile', 'DirectTV', 'Netflix', 'Spotify', 'Ring'],
-    'Entertainment': ['AMC Theaters', 'Ticketmaster', 'Steam', 'Amazon Prime', 'Disney+', 'Kindle', 'Six Flags', 'StubHub', 'PlayStation Store', 'GameStop'],
-    'Shopping': ['Amazon', 'Target', 'Walmart', 'Best Buy', 'Macy\'s', 'Nordstrom', 'Home Depot', 'IKEA', 'Apple Store', 'Nike'],
-    'Housing': ['Apartment Rent', 'Mortgage', 'State Farm', 'City Property Tax', 'HOA', 'IKEA', 'Home Depot', 'Merry Maids', 'TruGreen', 'Lowe\'s'],
-    'Healthcare': ['Primary Care', 'CVS Pharmacy', 'Dental Associates', 'Vision Center', 'Blue Cross', 'Therapy Group', 'Planet Fitness', 'GNC', 'Walgreens', 'Quest Diagnostics'],
-    'Education': ['University Bookstore', 'University Bursar', 'Staples', 'Coursera', 'Udemy', 'CompTIA', 'Student Loan Servicer', 'Duolingo', 'Barnes & Noble', 'Tutoring Center']
+    'Food & Dining': ['Whole Foods', 'Trader Joe\'s', 'Safeway', 'The Cheesecake Factory', 'Olive Garden', 'Chipotle', 'Starbucks', 'McDonald\'s', 'Subway', 'Local Cafe', 'Kroger', 'Aldi', 'Costco', 'Panera Bread', 'Taco Bell', 'KFC', 'Wendy\'s', 'Domino\'s Pizza', 'Papa John\'s', 'Burger King'],
+    'Transportation': ['Shell', 'Chevron', 'Exxon', 'Lyft', 'Uber', 'Metro Transit', 'Amtrak', 'Jiffy Lube', 'Discount Tire', 'Enterprise', 'Hertz', 'National', 'BP', 'Valvoline', 'Greyhound', 'Southwest Airlines', 'Delta Airlines', 'American Airlines', 'Midas', 'Goodyear'],
+    'Utilities': ['Electric Company', 'Water Utility', 'Comcast', 'AT&T', 'Verizon', 'T-Mobile', 'DirectTV', 'Netflix', 'Spotify', 'Ring', 'Hulu', 'YouTube Premium', 'Disney+', 'Apple Music', 'Amazon Prime', 'Cox Cable', 'Charter', 'CenturyLink', 'Dropbox', 'NordVPN'],
+    'Entertainment': ['AMC Theaters', 'Ticketmaster', 'Steam', 'Amazon Prime', 'Disney+', 'Kindle', 'Six Flags', 'StubHub', 'PlayStation Store', 'GameStop', 'Regal Cinemas', 'Epic Games', 'Fandango', 'HBO Max', 'Universal Studios', 'Live Nation', 'Xbox Store', 'Nintendo eShop', 'Barnes & Noble', 'Local Theater'],
+    'Shopping': ['Amazon', 'Target', 'Walmart', 'Best Buy', 'Macy\'s', 'Nordstrom', 'Home Depot', 'IKEA', 'Apple Store', 'Nike', 'Costco', 'TJ Maxx', 'Kohl\'s', 'Old Navy', 'Lowe\'s', 'Bed Bath & Beyond', 'Ross', 'Gap', 'Office Depot', 'Staples'],
+    'Housing': ['Apartment Rent', 'Mortgage', 'State Farm', 'City Property Tax', 'HOA', 'IKEA', 'Home Depot', 'Merry Maids', 'TruGreen', 'Lowe\'s', 'Progressive Insurance', 'Condo Association', 'Allstate', 'Apartment Insurance', 'Stanley Steemer', 'ADT', 'Terminix', 'Roto-Rooter', 'Sherwin Williams', 'American Home Shield'],
+    'Healthcare': ['Primary Care', 'CVS Pharmacy', 'Dental Associates', 'Vision Center', 'Blue Cross', 'Therapy Group', 'Planet Fitness', 'GNC', 'Walgreens', 'Quest Diagnostics', 'UnitedHealthcare', 'Kaiser Permanente', 'Rite Aid', 'LensCrafters', 'LA Fitness', 'Life Time Fitness', 'Humana', 'Aetna', 'Cigna', 'Gold\'s Gym'],
+    'Education': ['University Bookstore', 'University Bursar', 'Staples', 'Coursera', 'Udemy', 'CompTIA', 'Student Loan Servicer', 'Duolingo', 'Barnes & Noble', 'Tutoring Center', 'edX', 'LinkedIn Learning', 'College Board', 'Pearson', 'Private Tutor', 'Khan Academy Plus', 'Skillshare', 'Rosetta Stone', 'Navient', 'Sallie Mae']
   };
   
   // Categories with their frequency and amount ranges
@@ -84,14 +100,14 @@ export function generateSampleExpenses() {
   // Calculate total frequency for normalization
   const totalFrequency = categories.reduce((sum, cat) => sum + cat.frequency, 0);
   
-  // Generate 250-350 expenses
-  const expenseCount = getRandomNumber(250, 350);
+  // Generate 500-600 expenses (increased from 250-350)
+  const expenseCount = getRandomNumber(500, 600);
   
   // Create expense dates with proper distribution (more recent dates more frequent)
   const datesToUse = [];
   for (let i = 0; i < expenseCount; i++) {
     // Create a bias towards more recent dates using a weighted random approach
-    const randomFactor = Math.pow(Math.random(), 0.5); // Creates a bias towards newer dates
+    const randomFactor = Math.pow(Math.random(), 1.5); // Stronger bias towards newer dates
     const date = new Date(lastYear.getTime() + randomFactor * (now.getTime() - lastYear.getTime()));
     
     // Ensure we don't have future dates
@@ -152,46 +168,133 @@ export function generateSampleExpenses() {
     const provider = getRandomItem(providers[selectedCategory.name]);
     const description = Math.random() > 0.5 ? `${baseDescription} - ${provider}` : baseDescription;
     
+    // Create tags for some expenses (about 30% of them)
+    let tags = [];
+    if (Math.random() < 0.3) {
+      // Possible tags
+      const possibleTags = [
+        'Work Related', 'Personal', 'Family', 'Vacation', 'Emergency', 
+        'Recurring', 'One-time', 'Necessary', 'Splurge', 'Gift', 
+        'Reimbursable', 'Tax Deductible', 'Investment'
+      ];
+      
+      // Add 1-3 random tags
+      const tagCount = getRandomNumber(1, 3);
+      const shuffledTags = [...possibleTags].sort(() => 0.5 - Math.random());
+      tags = shuffledTags.slice(0, tagCount);
+    }
+    
     // Create the expense object
+    const expenseId = i + 1; // Using sequential IDs instead of UUIDs for consistency
+    
     expenses.push({
-      id: crypto.randomUUID(),
+      id: expenseId,
+      Id: expenseId, // Adding Id field to match Apper schema
+      Name: description.substring(0, Math.min(description.length, 20)) + (description.length > 20 ? '...' : ''),
       description,
       amount,
       category: selectedCategory.name,
       date: format(expenseDate, 'yyyy-MM-dd'),
-      createdAt: expenseDate.toISOString()
+      Tags: tags.join(','),
+      CreatedOn: expenseDate.toISOString(),
+      ModifiedOn: expenseDate.toISOString(),
+      Owner: "Current User",
+      CreatedBy: "Current User",
+      ModifiedBy: "Current User",
+      IsDeleted: false,
+      InSandbox: false
     });
   }
   
-  // Add a few recurring monthly expenses for stability
-  const recurringCategories = ['Utilities', 'Housing', 'Entertainment'];
+  // Add recurring monthly expenses for stability
+  const recurringCategories = ['Utilities', 'Housing', 'Entertainment', 'Food & Dining'];
   recurringCategories.forEach(catName => {
     const category = categories.find(c => c.name === catName);
     if (!category) return;
     
-    // Create a recurring description and amount
-    const recurringDesc = `Monthly ${getRandomItem(descriptions[catName])} - ${getRandomItem(providers[catName])}`;
-    const baseAmount = getRandomNumber(category.minAmount, category.maxAmount);
+    // Add 2-3 recurring expenses per category for more data
+    const numRecurring = getRandomNumber(2, 3);
     
-    // Add for the past 18 months
-    for (let i = 0; i < 18; i++) {
-      const monthDate = subMonths(now, i);
-      const slightVariation = 1 + (Math.random() * 0.1 - 0.05); // +/- 5% variation
-      const seasonalFactor = category.seasonalFactor(getMonth(monthDate));
+    for (let j = 0; j < numRecurring; j++) {
+      // Create a recurring description and amount
+      const recurringDesc = `Monthly ${getRandomItem(descriptions[catName])} - ${getRandomItem(providers[catName])}`;
+      const baseAmount = getRandomNumber(category.minAmount, category.maxAmount);
       
-      // Skip some months randomly (10% chance)
-      if (Math.random() < 0.1) continue;
-      
-      expenses.push({
-        id: crypto.randomUUID(),
-        description: recurringDesc,
-        amount: parseFloat((baseAmount * slightVariation * seasonalFactor).toFixed(2)),
-        category: catName,
-        date: format(new Date(getYear(monthDate), getMonth(monthDate), getRandomNumber(1, 10)), 'yyyy-MM-dd'),
-        createdAt: monthDate.toISOString()
-      });
+      // Add for the past 24 months
+      for (let i = 0; i < 24; i++) {
+        const monthDate = subMonths(now, i);
+        const slightVariation = 1 + (Math.random() * 0.1 - 0.05); // +/- 5% variation
+        const seasonalFactor = category.seasonalFactor(getMonth(monthDate));
+        
+        // Skip some months randomly (10% chance)
+        if (Math.random() < 0.1) continue;
+        
+        const expenseId = expenses.length + 1;
+        
+        expenses.push({
+          id: expenseId,
+          Id: expenseId, // Adding Id field to match Apper schema
+          Name: recurringDesc.substring(0, Math.min(recurringDesc.length, 20)) + (recurringDesc.length > 20 ? '...' : ''),
+          description: recurringDesc,
+          amount: parseFloat((baseAmount * slightVariation * seasonalFactor).toFixed(2)),
+          category: catName,
+          date: format(new Date(getYear(monthDate), getMonth(monthDate), getRandomNumber(1, 10)), 'yyyy-MM-dd'),
+          Tags: 'Recurring,Monthly',
+          CreatedOn: monthDate.toISOString(),
+          ModifiedOn: monthDate.toISOString(),
+          Owner: "Current User",
+          CreatedBy: "Current User",
+          ModifiedBy: "Current User",
+          IsDeleted: false,
+          InSandbox: false
+        });
+      }
     }
   });
+  
+  // Add some special high-value expenses
+  const specialEvents = [
+    { name: "Annual Insurance Premium", category: "Housing", multiplier: 12 },
+    { name: "Vacation Package", category: "Entertainment", multiplier: 10 },
+    { name: "New Smartphone", category: "Shopping", multiplier: 8 },
+    { name: "Car Repair", category: "Transportation", multiplier: 6 },
+    { name: "Medical Procedure", category: "Healthcare", multiplier: 8 },
+    { name: "College Tuition Payment", category: "Education", multiplier: 15 }
+  ];
+  
+  // Add one of each special event every year
+  for (let year = 0; year <= 1; year++) {
+    for (const event of specialEvents) {
+      const category = categories.find(c => c.name === event.category);
+      if (!category) continue;
+      
+      const eventDate = subMonths(now, getRandomNumber(year * 12, year * 12 + 11));
+      const baseAmount = category.maxAmount * event.multiplier;
+      const finalAmount = baseAmount + (Math.random() * baseAmount * 0.2 - baseAmount * 0.1); // +/- 10%
+      
+      const expenseId = expenses.length + 1;
+      const provider = getRandomItem(providers[event.category]);
+      const description = `${event.name} - ${provider}`;
+      
+      expenses.push({
+        id: expenseId,
+        Id: expenseId, // Adding Id field to match Apper schema
+        Name: description.substring(0, Math.min(description.length, 20)) + (description.length > 20 ? '...' : ''),
+        description,
+        amount: parseFloat(finalAmount.toFixed(2)),
+        category: event.category,
+        date: format(eventDate, 'yyyy-MM-dd'),
+        Tags: 'High Value,Annual',
+        CreatedOn: eventDate.toISOString(),
+        ModifiedOn: eventDate.toISOString(),
+        Owner: "Current User",
+        CreatedBy: "Current User",
+        ModifiedBy: "Current User",
+        IsDeleted: false,
+        InSandbox: false
+      });
+    }
+  }
   
   // Sort all expenses by date (newest first)
   return expenses.sort((a, b) => new Date(b.date) - new Date(a.date));
