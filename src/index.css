@@ -18,25 +18,25 @@
   }
   
   h1 {
-    @apply text-3xl md:text-4xl;
-  }
-  
-  h2 {
-    @apply text-2xl md:text-3xl;
-  }
-  
-  h3 {
     @apply text-xl md:text-2xl;
   }
   
-  h4 {
+  h2 {
     @apply text-lg md:text-xl;
+  }
+  
+  h3 {
+    @apply text-base md:text-lg;
+  }
+  
+  h4 {
+    @apply text-sm md:text-base;
   }
 }
 
 @layer components {
   .btn {
-    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply px-3 py-1.5 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 text-sm;
   }
   
   .btn-primary {
@@ -52,18 +52,18 @@
   }
   
   .card {
-    @apply bg-white dark:bg-surface-800 rounded-xl shadow-card dark:shadow-none border border-surface-200 dark:border-surface-700 overflow-hidden transition-all duration-200;
+    @apply bg-white dark:bg-surface-800 rounded-lg shadow-card dark:shadow-none border border-surface-200 dark:border-surface-700 overflow-hidden transition-all duration-200;
   }
   
   .input {
-    @apply w-full px-4 py-2 rounded-lg border border-surface-300 dark:border-surface-700 bg-white dark:bg-surface-800 
+    @apply w-full px-3 py-1.5 rounded-lg border border-surface-300 dark:border-surface-700 bg-white dark:bg-surface-800 
            focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent
-           text-surface-800 dark:text-surface-200 placeholder-surface-400 
+           text-surface-800 dark:text-surface-200 placeholder-surface-400 text-sm
            transition-all duration-200;
   }
   
   .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    @apply inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium;
   }
   
   .badge-primary {
@@ -72,6 +72,24 @@
   
   .badge-secondary {
     @apply bg-secondary-light/20 text-secondary-dark dark:bg-secondary-dark/30 dark:text-secondary-light;
+  }
+  
+  /* Compact UI elements */
+  .input-compact {
+    @apply py-1 px-2 text-xs;
+  }
+  
+  .btn-compact {
+    @apply py-1 px-2 text-xs;
+  }
+  
+  .card-compact {
+    @apply p-2;
+  }
+  
+  .table-compact th,
+  .table-compact td {
+    @apply py-1 px-1.5 text-xs;
   }
 }
 
@@ -91,5 +109,43 @@
   
   .neu-dark {
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Compact spacing utilities */
+  .gap-xs {
+    gap: 0.125rem;
+  }
+  
+  .p-xs {
+    padding: 0.125rem;
+  }
+  
+  .px-xs {
+    padding-left: 0.125rem;
+    padding-right: 0.125rem;
+  }
+  
+  .py-xs {
+    padding-top: 0.125rem;
+    padding-bottom: 0.125rem;
+  }
+  
+  /* Text sizes for compact UI */
+  .text-2xs {
+    font-size: 0.65rem;
+    line-height: 0.85rem;
+  }
+  
+  /* Reduced height elements */
+  .h-sm {
+    height: 1.5rem;
+  }
+  
+  .min-h-sm {
+    min-height: 1.5rem;
+  }
+  
+  .border-3 {
+    border-width: 3px;
   }
 }
