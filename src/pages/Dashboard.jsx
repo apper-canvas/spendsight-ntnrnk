@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
-import { format, subMonths, startOfYear, isSameMonth, isSameYear } from 'date-fns';
+import { format, subMonths, startOfYear, isSameMonth, isSameYear, endOfMonth, startOfMonth } from 'date-fns';
 import { useSelector } from 'react-redux';
 import getIcon from '../utils/iconUtils';
 import MainFeature from '../components/MainFeature';
@@ -113,10 +113,19 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
         ? acc + expense.amount : acc;
     }, 0);
     
+    // Fixed calculation for "This Month Last Year"
+    const currentMonth = now.getMonth();
+    const lastYearValue = now.getFullYear() - 1;
+    
+    // Create start and end dates for the same month last year
+    const startOfLastYearSameMonth = startOfMonth(new Date(lastYearValue, currentMonth, 1));
+    const endOfLastYearSameMonth = endOfMonth(new Date(lastYearValue, currentMonth, 1));
+    
     const thisMonthLastYear = expensesArray.reduce((acc, expense) => {
       const expenseDate = new Date(expense.date);
-      const lastYearSameMonth = new Date(now.getFullYear() - 1, now.getMonth());
-      return isSameMonth(expenseDate, lastYearSameMonth) ? acc + expense.amount : acc;
+      // Check if the expense date falls within the date range of same month last year
+      return (expenseDate >= startOfLastYearSameMonth && expenseDate <= endOfLastYearSameMonth) 
+        ? acc + expense.amount : acc;
     }, 0);
     
     return {
