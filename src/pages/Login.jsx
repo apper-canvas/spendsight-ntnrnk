@@ -26,7 +26,7 @@ function Login() {
                 </div>
               </div>
               <h1 className="slds-text-heading_large text-brand-info dark:text-white">Welcome Back</h1>
-              <p className="mt-2 text-surface-600 dark:text-surface-400">Sign in to access your SpendSight account</p>
+              <p className="mt-2 text-surface-600 dark:text-surface-400">Sign in to your account</p>
             </div>
           </div>
           

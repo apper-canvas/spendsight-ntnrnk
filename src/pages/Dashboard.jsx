@@ -151,7 +151,7 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-surface-50 dark:bg-surface-900">
         <div className="slds-spinner"></div>
-        <p className="mt-3 text-sm text-surface-600 dark:text-surface-300">Loading SpendSight...</p>
+        <p className="mt-3 text-sm text-surface-600 dark:text-surface-300">Loading...</p>
       </div>
     );
   }
@@ -161,44 +161,22 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
 
   return (
     <div className="min-h-screen flex flex-col bg-surface-50 dark:bg-surface-900">
-      {/* Salesforce Lightning-style Header */}
-      <header className="slds-page-header">
-        <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
-          <div className="flex items-center">
-            <span className="text-base font-bold text-primary dark:text-primary-light">
-              SpendSight
-            </span>
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            {user && (
-              <div className="text-xs font-medium text-surface-700 dark:text-surface-300">
-                {user.firstName || 'User'}
-              </div>
-            )}
-            <button
-              onClick={toggleDarkMode}
-              className="p-1.5 rounded-md bg-surface-100 dark:bg-surface-700 text-surface-600 dark:text-surface-300 hover:bg-surface-200 dark:hover:bg-surface-600 transition-colors"
-              aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-            >
-              {isDarkMode ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
-            </button>
-          </div>
-        </div>
-      </header>
-      
       {/* Main content */}
       <div className="flex-1 flex flex-col md:flex-row">
         {/* Mobile Bottom Nav / Desktop Side Nav - SLDS Navigation */}
         <nav className="fixed bottom-0 left-0 right-0 md:relative md:w-16 lg:w-48 bg-white dark:bg-surface-800 border-t md:border-r border-surface-200 dark:border-surface-700 z-10 h-14 md:h-auto">
           <div className="md:sticky md:top-0 md:h-screen flex md:flex-col">
-            <div className="h-14 md:h-14 md:border-b border-surface-200 dark:border-surface-700 hidden md:flex md:items-center md:justify-center">
-              <span className="text-base font-bold hidden lg:block text-primary dark:text-primary-light">
-                SpendSight
-              </span>
+            <div className="h-14 md:h-14 md:border-b border-surface-200 dark:border-surface-700 hidden md:flex md:items-center md:justify-between px-3">
               <span className="lg:hidden flex items-center justify-center">
                 <AnalyticsIcon className="w-5 h-5 text-primary" />
               </span>
+              <button
+                onClick={toggleDarkMode}
+                className="p-1.5 rounded-md bg-surface-100 dark:bg-surface-700 text-surface-600 dark:text-surface-300 hover:bg-surface-200 dark:hover:bg-surface-600 transition-colors"
+                aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+              >
+                {isDarkMode ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
+              </button>
             </div>
             
             <div className="flex md:flex-col justify-around md:justify-start md:mt-3 md:space-y-1 md:px-2 h-full md:h-auto">
@@ -266,7 +244,18 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
         </nav>
         
         {/* Main content area */}
-        <main className="flex-1 py-4 px-4 mb-14 md:mb-0">
+        <main className="flex-1 py-4 px-4 mb-14 md:mb-0 relative">
+          {/* Dark mode toggle for mobile (fixed at the top right) */}
+          <div className="md:hidden absolute top-2 right-4 z-20">
+            <button
+              onClick={toggleDarkMode}
+              className="p-1.5 rounded-md bg-surface-100 dark:bg-surface-700 text-surface-600 dark:text-surface-300 hover:bg-surface-200 dark:hover:bg-surface-600 transition-colors shadow-sm"
+              aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {isDarkMode ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
+            </button>
+          </div>
+          
           {selectedPage === 'dashboard' && (
             <div className="space-y-4">
               <motion.div 
@@ -629,7 +618,7 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
                 </div>
                 <div className="card-body">
                   <div className="text-sm text-surface-600 dark:text-surface-400">
-                    <p>SpendSight v1.0.0</p>
+                    <p>v1.0.0</p>
                     <p className="mt-1">A personal expense tracking application</p>
                   </div>
                 </div>
