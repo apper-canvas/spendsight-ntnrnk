@@ -85,11 +85,15 @@ const Sidebar = ({ onLogout }) => {
                   `${baseMenuItemStyles} ${isActive ? activeMenuItemStyles : inactiveMenuItemStyles} ${isCollapsed ? 'justify-center p-3' : 'px-3 py-2'} group`
                 }
               >
-                <span className={`${baseIconStyles} ${location.pathname === item.path ? activeIconStyles : inactiveIconStyles} w-5 h-5`}>
-                  {item.icon}
-                </span>
-                {!isCollapsed && (
-                  <span className="ml-3 whitespace-nowrap">{item.label}</span>
+                {({ isActive }) => (
+                  <>
+                    <span className={`${baseIconStyles} ${isActive ? activeIconStyles : inactiveIconStyles} w-5 h-5`}>
+                      {item.icon}
+                    </span>
+                    {!isCollapsed && (
+                      <span className="ml-3 whitespace-nowrap">{item.label}</span>
+                    )}
+                  </>
                 )}
               </NavLink>
             </li>
@@ -157,10 +161,14 @@ const Sidebar = ({ onLogout }) => {
                         `${baseMenuItemStyles} ${isActive ? activeMenuItemStyles : inactiveMenuItemStyles} px-3 py-2 group`
                       }
                     >
-                      <span className={`${baseIconStyles} ${location.pathname === item.path ? activeIconStyles : inactiveIconStyles} w-5 h-5`}>
-                        {item.icon}
-                      </span>
-                      <span className="ml-3 whitespace-nowrap">{item.label}</span>
+                      {({ isActive }) => (
+                        <>
+                          <span className={`${baseIconStyles} ${isActive ? activeIconStyles : inactiveIconStyles} w-5 h-5`}>
+                            {item.icon}
+                          </span>
+                          <span className="ml-3 whitespace-nowrap">{item.label}</span>
+                        </>
+                      )}
                     </NavLink>
                   </li>
                 ))}
