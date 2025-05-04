@@ -32,8 +32,9 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
     const loadExpenses = async () => {
       setIsLoading(true);
       try {
-        const data = await fetchExpenses();
-        setExpenses(data);
+        const response = await fetchExpenses();
+        // Make sure to extract the data array from the response
+        setExpenses(response.data || []);
       } catch (error) {
         console.error("Failed to load expenses:", error);
         toast.error("Failed to load expenses");
@@ -69,23 +70,26 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
     const startOfThisYear = startOfYear(now);
     const lastYear = subMonths(now, 12);
     
-    const totalThisYear = expenses.reduce((acc, expense) => {
+    // Ensure expenses is an array before using reduce
+    const expensesArray = Array.isArray(expenses) ? expenses : [];
+    
+    const totalThisYear = expensesArray.reduce((acc, expense) => {
       const expenseDate = new Date(expense.date);
       return isSameYear(expenseDate, now) ? acc + expense.amount : acc;
     }, 0);
     
-    const totalLast3Months = expenses.reduce((acc, expense) => {
+    const totalLast3Months = expensesArray.reduce((acc, expense) => {
       const expenseDate = new Date(expense.date);
       return expenseDate >= threeMonthsAgo ? acc + expense.amount : acc;
     }, 0);
     
-    const totalLastYear = expenses.reduce((acc, expense) => {
+    const totalLastYear = expensesArray.reduce((acc, expense) => {
       const expenseDate = new Date(expense.date);
       return expenseDate >= lastYear && expenseDate < startOfThisYear 
         ? acc + expense.amount : acc;
     }, 0);
     
-    const thisMonthLastYear = expenses.reduce((acc, expense) => {
+    const thisMonthLastYear = expensesArray.reduce((acc, expense) => {
       const expenseDate = new Date(expense.date);
       const lastYearSameMonth = new Date(now.getFullYear() - 1, now.getMonth());
       return isSameMonth(expenseDate, lastYearSameMonth) ? acc + expense.amount : acc;
@@ -103,7 +107,10 @@ function Dashboard({ isDarkMode, toggleDarkMode }) {
   
   // Get category breakdown
   const getCategoryBreakdown = () => {
-    return expenses.reduce((acc, expense) => {
+    // Ensure expenses is an array before using reduce
+    const expensesArray = Array.isArray(expenses) ? expenses : [];
+    
+    return expensesArray.reduce((acc, expense) => {
       if (!acc[expense.category]) {
         acc[expense.category] = {
           total: 0,
