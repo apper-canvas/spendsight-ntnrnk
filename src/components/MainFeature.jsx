@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-toastify';
 import getIcon from '../utils/iconUtils';
+import { createExpense } from '../services/expenseService';
 
 function MainFeature({ onAddExpense }) {
   // Icons
@@ -43,7 +44,7 @@ function MainFeature({ onAddExpense }) {
   });
   
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Validate form
@@ -67,7 +68,7 @@ function MainFeature({ onAddExpense }) {
     if (Object.keys(newErrors).length === 0) {
       setIsSubmitting(true);
       
-      setTimeout(() => {
+      try {
         const newExpense = {
           description,
           amount: parseFloat(amount),
@@ -75,7 +76,11 @@ function MainFeature({ onAddExpense }) {
           date,
         };
         
-        onAddExpense(newExpense);
+        // Save to database
+        const savedExpense = await createExpense(newExpense);
+        
+        // Update UI
+        onAddExpense(savedExpense);
         
         // Reset form and show success state
         setDescription('');
@@ -85,13 +90,16 @@ function MainFeature({ onAddExpense }) {
         setShowCustomCategory(false);
         setDate(new Date().toISOString().split('T')[0]);
         setSubmitSuccess(true);
-        setIsSubmitting(false);
         
         // Reset success state after a delay
         setTimeout(() => {
           setSubmitSuccess(false);
         }, 2000);
-      }, 600);
+      } catch (error) {
+        toast.error("Failed to add expense: " + (error.message || "Unknown error"));
+      } finally {
+        setIsSubmitting(false);
+      }
     } else {
       toast.error("Please fix the errors in the form");
     }
@@ -226,7 +234,7 @@ function MainFeature({ onAddExpense }) {
             </label>
             
             <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 
-                            ${errors.category ? 'border border-red-500 dark:border-red-500 rounded-lg p-2' : ''}`}>
+                          ${errors.category ? 'border border-red-500 dark:border-red-500 rounded-lg p-2' : ''}`}>
               {defaultCategories.map((cat) => {
                 const Icon = categoryIcons[cat.id];
                 const isSelected = !showCustomCategory && category === cat.name;
