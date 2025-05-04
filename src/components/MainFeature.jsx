@@ -26,15 +26,15 @@ function MainFeature({ onAddExpense }) {
   
   // Default categories
   const defaultCategories = [
-    { id: 'food', name: 'Food & Dining', icon: 'Utensils', color: 'rgb(239, 68, 68)' },
-    { id: 'transport', name: 'Transportation', icon: 'Car', color: 'rgb(59, 130, 246)' },
-    { id: 'utilities', name: 'Utilities', icon: 'Lightbulb', color: 'rgb(245, 158, 11)' },
-    { id: 'entertainment', name: 'Entertainment', icon: 'Film', color: 'rgb(139, 92, 246)' },
-    { id: 'shopping', name: 'Shopping', icon: 'ShoppingBag', color: 'rgb(236, 72, 153)' },
-    { id: 'housing', name: 'Housing', icon: 'Home', color: 'rgb(34, 197, 94)' },
-    { id: 'health', name: 'Healthcare', icon: 'Stethoscope', color: 'rgb(14, 165, 233)' },
-    { id: 'education', name: 'Education', icon: 'GraduationCap', color: 'rgb(168, 85, 247)' },
-    { id: 'custom', name: 'Add Custom...', icon: 'Plus', color: 'rgb(75, 85, 99)' },
+    { id: 'food', name: 'Food & Dining', icon: 'Utensils', color: '#0070D2' },
+    { id: 'transport', name: 'Transportation', icon: 'Car', color: '#1589EE' },
+    { id: 'utilities', name: 'Utilities', icon: 'Lightbulb', color: '#FFB75D' },
+    { id: 'entertainment', name: 'Entertainment', icon: 'Film', color: '#4BC076' },
+    { id: 'shopping', name: 'Shopping', icon: 'ShoppingBag', color: '#0070D2' },
+    { id: 'housing', name: 'Housing', icon: 'Home', color: '#1589EE' },
+    { id: 'health', name: 'Healthcare', icon: 'Stethoscope', color: '#4BC076' },
+    { id: 'education', name: 'Education', icon: 'GraduationCap', color: '#1589EE' },
+    { id: 'custom', name: 'Add Custom...', icon: 'Plus', color: '#706E6B' },
   ];
   
   // Get icon components for each category
@@ -123,7 +123,7 @@ function MainFeature({ onAddExpense }) {
       animate={{ opacity: 1, y: 0 }}
       className="max-w-3xl mx-auto"
     >
-      <div className="card p-2 relative overflow-hidden">
+      <div className="card relative overflow-hidden">
         {/* Success overlay */}
         <AnimatePresence>
           {submitSuccess && (
@@ -137,243 +137,242 @@ function MainFeature({ onAddExpense }) {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-2"
+                className="w-12 h-12 bg-brand-success/10 dark:bg-brand-success/20 rounded-full flex items-center justify-center mb-3"
               >
-                <CheckCircleIcon className="w-5 h-5 text-green-500 dark:text-green-400" />
+                <CheckCircleIcon className="w-7 h-7 text-brand-success" />
               </motion.div>
-              <h3 className="text-sm font-semibold text-surface-900 dark:text-white mb-0.5">
+              <h3 className="text-base font-semibold text-surface-900 dark:text-white mb-1">
                 Expense Added!
               </h3>
-              <p className="text-2xs text-surface-600 dark:text-surface-400">
+              <p className="text-sm text-surface-600 dark:text-surface-400">
                 Your expense has been recorded.
               </p>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <h2 className="text-sm font-bold text-surface-900 dark:text-white mb-2 flex items-center">
-          <ReceiptIcon className="w-4 h-4 mr-1 text-primary dark:text-primary-light" />
-          New Expense
-        </h2>
+        <div className="card-header">
+          <h2 className="slds-text-heading_small text-surface-900 dark:text-white flex items-center">
+            <ReceiptIcon className="w-4 h-4 mr-2 text-primary dark:text-primary-light" />
+            New Expense
+          </h2>
+        </div>
         
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <div className="space-y-2">
-            {/* Description & Amount */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {/* Description field */}
-              <div className="space-y-0.5">
-                <label htmlFor="description" className="block text-2xs font-medium text-surface-700 dark:text-surface-300">
-                  Description
+        <div className="card-body">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-3">
+              {/* Description & Amount */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* Description field */}
+                <div className="slds-form-element">
+                  <label htmlFor="description" className="slds-form-element__label">
+                    Description
+                  </label>
+                  <div className="slds-input-has-icon">
+                    <div className="slds-input-icon">
+                      <ReceiptIcon className="h-4 w-4" />
+                    </div>
+                    <input
+                      type="text"
+                      id="description"
+                      className={`input ${errors.description ? 'border-brand-error dark:border-brand-error focus:ring-brand-error' : ''}`}
+                      placeholder="What did you spend on?"
+                      value={description}
+                      onChange={(e) => {
+                        setDescription(e.target.value);
+                        if (errors.description) {
+                          setErrors({ ...errors, description: undefined });
+                        }
+                      }}
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  {errors.description && (
+                    <div className="slds-form-element__help">
+                      <AlertCircleIcon className="w-3 h-3 mr-1" />
+                      {errors.description}
+                    </div>
+                  )}
+                </div>
+                
+                {/* Amount field */}
+                <div className="slds-form-element">
+                  <label htmlFor="amount" className="slds-form-element__label">
+                    Amount
+                  </label>
+                  <div className="slds-input-has-icon">
+                    <div className="slds-input-icon">
+                      <RupeeIcon className="h-4 w-4" />
+                    </div>
+                    <input
+                      type="text"
+                      id="amount"
+                      className={`input ${errors.amount ? 'border-brand-error dark:border-brand-error focus:ring-brand-error' : ''}`}
+                      placeholder="0.00"
+                      value={amount}
+                      onChange={(e) => {
+                        // Allow only numbers and decimal point
+                        const value = e.target.value.replace(/[^0-9.]/g, '');
+                        setAmount(value);
+                        if (errors.amount) {
+                          setErrors({ ...errors, amount: undefined });
+                        }
+                      }}
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  {errors.amount && (
+                    <div className="slds-form-element__help">
+                      <AlertCircleIcon className="w-3 h-3 mr-1" />
+                      {errors.amount}
+                    </div>
+                  )}
+                </div>
+              </div>
+          
+              {/* Date field */}
+              <div className="slds-form-element">
+                <label htmlFor="date" className="slds-form-element__label">
+                  Date
                 </label>
-                <div className="relative">
+                <div className="slds-input-has-icon">
+                  <div className="slds-input-icon">
+                    <CalendarIcon className="h-4 w-4" />
+                  </div>
                   <input
-                    type="text"
-                    id="description"
-                    className={`input-compact w-full ${errors.description ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''}`}
-                    placeholder="What did you spend on?"
-                    value={description}
+                    type="date"
+                    id="date"
+                    className={`input ${errors.date ? 'border-brand-error dark:border-brand-error focus:ring-brand-error' : ''}`}
+                    value={date}
                     onChange={(e) => {
-                      setDescription(e.target.value);
-                      if (errors.description) {
-                        setErrors({ ...errors, description: undefined });
+                      setDate(e.target.value);
+                      if (errors.date) {
+                        setErrors({ ...errors, date: undefined });
                       }
                     }}
+                    max={new Date().toISOString().split('T')[0]}
                     disabled={isSubmitting}
                   />
-                  <div className="absolute inset-y-0 left-0 pl-1.5 flex items-center pointer-events-none">
-                    <span className="text-surface-500 dark:text-surface-400">
-                      <ReceiptIcon className="h-3 w-3" />
-                    </span>
-                  </div>
                 </div>
-                {errors.description && (
-                  <p className="text-2xs text-red-500 flex items-center mt-0.5">
-                    <AlertCircleIcon className="w-2.5 h-2.5 mr-0.5" />
-                    {errors.description}
-                  </p>
+                {errors.date && (
+                  <div className="slds-form-element__help">
+                    <AlertCircleIcon className="w-3 h-3 mr-1" />
+                    {errors.date}
+                  </div>
                 )}
+              </div>
+            </div>
+            
+            {/* Category selection */}
+            <div className="slds-form-element">
+              <label className="slds-form-element__label">
+                Category
+              </label>
+              
+              <div className={`grid grid-cols-3 sm:grid-cols-5 gap-2
+                            ${errors.category ? 'border border-brand-error dark:border-brand-error rounded-md p-2' : ''}`}>
+                {defaultCategories.map((cat) => {
+                  const Icon = categoryIcons[cat.id];
+                  const isSelected = !showCustomCategory && category === cat.name;
+                  
+                  return (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      className={`flex flex-col items-center justify-center p-2 rounded-md border transition-all
+                                ${isSelected ? 
+                                  'border-primary bg-primary/5 dark:bg-primary-dark/10 shadow-sm' : 
+                                  'border-surface-200 dark:border-surface-700 hover:bg-surface-50 dark:hover:bg-surface-750'}`}
+                      onClick={() => handleCategorySelect(cat.id)}
+                      disabled={isSubmitting}
+                    >
+                      <div 
+                        className="w-8 h-8 flex items-center justify-center rounded-full mb-1" 
+                        style={{ backgroundColor: `${cat.color}10`, color: cat.color }}
+                      >
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <span className="text-xs font-medium text-surface-700 dark:text-surface-300 whitespace-nowrap overflow-hidden text-ellipsis max-w-full text-center">
+                        {cat.name.length > 12 ? cat.name.split(' ')[0] : cat.name}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
               
-              {/* Amount field */}
-              <div className="space-y-0.5">
-                <label htmlFor="amount" className="block text-2xs font-medium text-surface-700 dark:text-surface-300">
-                  Amount
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    id="amount"
-                    className={`input-compact w-full ${errors.amount ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''}`}
-                    placeholder="0.00"
-                    value={amount}
-                    onChange={(e) => {
-                      // Allow only numbers and decimal point
-                      const value = e.target.value.replace(/[^0-9.]/g, '');
-                      setAmount(value);
-                      if (errors.amount) {
-                        setErrors({ ...errors, amount: undefined });
-                      }
-                    }}
-                    disabled={isSubmitting}
-                  />
-                  <div className="absolute inset-y-0 left-0 pl-1.5 flex items-center pointer-events-none">
-                    <span className="text-surface-500 dark:text-surface-400">
-                      <RupeeIcon className="h-3 w-3" />
-                    </span>
-                  </div>
+              {errors.category && (
+                <div className="slds-form-element__help">
+                  <AlertCircleIcon className="w-3 h-3 mr-1" />
+                  {errors.category}
                 </div>
-                {errors.amount && (
-                  <p className="text-2xs text-red-500 flex items-center mt-0.5">
-                    <AlertCircleIcon className="w-2.5 h-2.5 mr-0.5" />
-                    {errors.amount}
-                  </p>
-                )}
-              </div>
-            </div>
-        
-            {/* Date field */}
-            <div className="space-y-0.5">
-              <label htmlFor="date" className="block text-2xs font-medium text-surface-700 dark:text-surface-300">
-                Date
-              </label>
-              <div className="relative">
-                <input
-                  type="date"
-                  id="date"
-                  className={`input-compact w-full ${errors.date ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''}`}
-                  value={date}
-                  onChange={(e) => {
-                    setDate(e.target.value);
-                    if (errors.date) {
-                      setErrors({ ...errors, date: undefined });
-                    }
-                  }}
-                  max={new Date().toISOString().split('T')[0]}
-                  disabled={isSubmitting}
-                />
-                <div className="absolute inset-y-0 left-0 pl-1.5 flex items-center pointer-events-none">
-                  <span className="text-surface-500 dark:text-surface-400">
-                    <CalendarIcon className="h-3 w-3" />
-                  </span>
-                </div>
-              </div>
-              {errors.date && (
-                <p className="text-2xs text-red-500 flex items-center mt-0.5">
-                  <AlertCircleIcon className="w-2.5 h-2.5 mr-0.5" />
-                  {errors.date}
-                </p>
               )}
-            </div>
-          </div>
-          
-          {/* Category selection */}
-          <div className="space-y-0.5">
-            <label className="block text-2xs font-medium text-surface-700 dark:text-surface-300">
-              Category
-            </label>
-            
-            <div className={`grid grid-cols-4 gap-1 
-                          ${errors.category ? 'border border-red-500 dark:border-red-500 rounded-lg p-1' : ''}`}>
-              {defaultCategories.map((cat) => {
-                const Icon = categoryIcons[cat.id];
-                const isSelected = !showCustomCategory && category === cat.name;
-                
-                return (
-                  <button
-                    key={cat.id}
-                    type="button"
-                    className={`flex flex-col items-center justify-center p-1 rounded-lg border transition-all h-sm
-                              ${isSelected ? 
-                                'border-primary bg-primary/5 dark:bg-primary-dark/10 shadow-sm' : 
-                                'border-surface-200 dark:border-surface-700 hover:bg-surface-50 dark:hover:bg-surface-750'}`}
-                    onClick={() => handleCategorySelect(cat.id)}
-                    disabled={isSubmitting}
-                  >
-                    <div 
-                      className="w-4 h-4 flex items-center justify-center rounded-full" 
-                      style={{ backgroundColor: `${cat.color}20`, color: cat.color }}
-                    >
-                      <Icon className="w-2.5 h-2.5" />
+              
+              {/* Custom category input */}
+              {showCustomCategory && (
+                <div className="mt-3">
+                  <div className="slds-input-has-icon">
+                    <div className="slds-input-icon">
+                      <TagIcon className="h-4 w-4" />
                     </div>
-                    <span className="text-2xs font-medium text-surface-700 dark:text-surface-300 whitespace-nowrap overflow-hidden text-ellipsis max-w-full text-center mt-0.5">
-                      {cat.name.length > 8 ? cat.name.split(' ')[0] : cat.name}
-                    </span>
-                  </button>
-                );
-              })}
+                    <input
+                      type="text"
+                      className={`input ${errors.customCategory ? 'border-brand-error dark:border-brand-error focus:ring-brand-error' : ''}`}
+                      placeholder="Enter custom category"
+                      value={customCategory}
+                      onChange={(e) => {
+                        setCustomCategory(e.target.value);
+                        if (errors.customCategory) {
+                          setErrors({ ...errors, customCategory: undefined });
+                        }
+                      }}
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  {errors.customCategory && (
+                    <div className="slds-form-element__help">
+                      <AlertCircleIcon className="w-3 h-3 mr-1" />
+                      {errors.customCategory}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
             
-            {errors.category && (
-              <p className="text-2xs text-red-500 flex items-center mt-0.5">
-                <AlertCircleIcon className="w-2.5 h-2.5 mr-0.5" />
-                {errors.category}
-              </p>
-            )}
-            
-            {/* Custom category input */}
-            {showCustomCategory && (
-              <div className="mt-1">
-                <div className="relative">
-                  <input
-                    type="text"
-                    className={`input-compact w-full ${errors.customCategory ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''}`}
-                    placeholder="Enter custom category"
-                    value={customCategory}
-                    onChange={(e) => {
-                      setCustomCategory(e.target.value);
-                      if (errors.customCategory) {
-                        setErrors({ ...errors, customCategory: undefined });
-                      }
-                    }}
-                    disabled={isSubmitting}
-                  />
-                  <div className="absolute inset-y-0 left-0 pl-1.5 flex items-center pointer-events-none">
-                    <span className="text-surface-500 dark:text-surface-400">
-                      <TagIcon className="h-3 w-3" />
-                    </span>
-                  </div>
-                </div>
-                {errors.customCategory && (
-                  <p className="text-2xs text-red-500 flex items-center mt-0.5">
-                    <AlertCircleIcon className="w-2.5 h-2.5 mr-0.5" />
-                    {errors.customCategory}
-                  </p>
+            {/* Submit button */}
+            <div>
+              <motion.button
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                type="submit"
+                className="w-full btn btn-primary flex items-center justify-center space-x-2"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Saving...</span>
+                  </>
+                ) : (
+                  <>
+                    <RupeeIcon className="w-4 h-4" />
+                    <span>Add Expense</span>
+                  </>
                 )}
-              </div>
-            )}
-          </div>
-          
-          {/* Submit button */}
-          <div>
-            <motion.button
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 0.99 }}
-              type="submit"
-              className="w-full btn-compact btn-primary flex items-center justify-center space-x-1"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <>
-                  <svg className="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  <span>Saving...</span>
-                </>
-              ) : (
-                <>
-                  <RupeeIcon className="w-3 h-3" />
-                  <span>Add Expense</span>
-                </>
-              )}
-            </motion.button>
-          </div>
-        </form>
+              </motion.button>
+            </div>
+          </form>
+        </div>
       </div>
       
-      <div className="mt-2 p-2 bg-surface-100/50 dark:bg-surface-800/50 rounded-lg">
-        <p className="text-2xs text-surface-600 dark:text-surface-400">
-          💡 <span className="font-medium">Tip:</span> Categorizing expenses helps track spending patterns and identify saving opportunities.
+      <div className="mt-3 p-3 bg-brand-primary/5 dark:bg-primary-dark/10 rounded-md border border-primary/10 dark:border-primary-dark/20">
+        <p className="text-xs text-surface-700 dark:text-surface-300 flex items-start">
+          <span className="mr-2">💡</span> 
+          <span>
+            <span className="font-medium">Tip:</span> Categorizing expenses helps track spending patterns and identify saving opportunities.
+          </span>
         </p>
       </div>
     </motion.div>

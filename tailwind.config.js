@@ -8,42 +8,53 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#4F46E5',
-          light: '#818CF8',
-          dark: '#3730A3'
+          DEFAULT: '#0070D2',  // SLDS Brand Primary Blue
+          light: '#4BC076',    // SLDS Success Green
+          dark: '#005FB2'      // SLDS Dark Blue
         },
         secondary: {
-          DEFAULT: '#0EA5E9',
-          light: '#38BDF8',
-          dark: '#0369A1'
+          DEFAULT: '#1589EE',  // SLDS Secondary Blue
+          light: '#61C3F2',    // SLDS Light Blue
+          dark: '#0F69B3'      // SLDS Darker Blue
         },
-        accent: '#8B5CF6',
+        accent: '#706E6B',     // SLDS Neutral Gray
+        // SLDS Background Colors
         surface: {
-          50: '#f8fafc',   // Lightest
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',  // Added
-          500: '#64748b',  // Added
-          600: '#475569',  // Added
-          700: '#334155',  // Added
-          800: '#1e293b',  // Added
-          900: '#0f172a'   // Darkest
+          50: '#F3F2F2',       // SLDS Light Gray (lightest)
+          100: '#EFEEED',      // SLDS Light Gray
+          200: '#E4E2E0',      // SLDS Gray Medium
+          300: '#D8D8D8',      // SLDS Gray Medium
+          400: '#B0ADAB',      // SLDS Gray Medium
+          500: '#969492',      // SLDS Gray Medium
+          600: '#706E6B',      // SLDS Neutral Gray
+          700: '#514F4D',      // SLDS Gray Dark
+          800: '#292929',      // SLDS Gray Darker
+          900: '#181818'       // SLDS Darkest (almost black)
+        },
+        // SLDS Specific Colors
+        brand: {
+          primary: '#0070D2',   // SLDS Brand Primary
+          success: '#4BC076',   // SLDS Success
+          warning: '#FFB75D',   // SLDS Warning
+          error: '#D0021B',     // SLDS Error
+          info: '#16325C',      // SLDS Info
         }      
       },
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui'],
-        heading: ['Inter', 'ui-sans-serif', 'system-ui']
+        sans: ['Salesforce Sans', 'Inter', 'ui-sans-serif', 'system-ui'],
+        heading: ['Salesforce Sans', 'Inter', 'ui-sans-serif', 'system-ui']
       },
       boxShadow: {
-        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
-        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
-        'neu-light': '5px 5px 15px #d1d9e6, -5px -5px 15px #ffffff',
-        'neu-dark': '5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.05)'
+        'soft': '0 2px 2px 0 rgba(0, 0, 0, 0.1)',
+        'card': '0 2px 2px 0 rgba(0, 0, 0, 0.1)',
+        'dropdown': '0 2px 3px 0 rgba(0, 0, 0, 0.16)',
+        'focus': '0 0 3px #0070D2',
+        'neu-light': '0 2px 2px 0 rgba(0, 0, 0, 0.1)',
+        'neu-dark': '0 2px 2px 0 rgba(0, 0, 0, 0.2)'
       },
       borderRadius: {
-        'xl': '0.75rem',
-        '2xl': '1rem'
+        'xl': '0.25rem',
+        '2xl': '0.5rem'
       }
     }  
   },

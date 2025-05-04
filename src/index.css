@@ -10,11 +10,11 @@
   }
   
   body {
-    @apply font-sans text-surface-800 dark:text-surface-200 transition-colors duration-200 ease-in-out;
+    @apply font-sans text-surface-800 dark:text-surface-200 transition-colors duration-200 ease-in-out bg-surface-50 dark:bg-surface-900;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading font-semibold tracking-tight;
+    @apply font-heading font-semibold tracking-tight text-brand-info dark:text-white;
   }
   
   h1 {
@@ -35,8 +35,9 @@
 }
 
 @layer components {
+  /* Salesforce Lightning Button Styles */
   .btn {
-    @apply px-3 py-1.5 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 text-sm;
+    @apply px-4 py-2 rounded-md font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 text-sm inline-flex items-center justify-center;
   }
   
   .btn-primary {
@@ -44,46 +45,101 @@
   }
   
   .btn-secondary {
-    @apply bg-secondary text-white hover:bg-secondary-dark focus:ring-secondary;
+    @apply bg-transparent border border-primary text-primary hover:bg-primary/5 focus:ring-primary;
+  }
+  
+  .btn-success {
+    @apply bg-brand-success text-white hover:bg-brand-success/90 focus:ring-brand-success;
+  }
+  
+  .btn-warning {
+    @apply bg-brand-warning text-surface-800 hover:bg-brand-warning/90 focus:ring-brand-warning;
+  }
+  
+  .btn-danger {
+    @apply bg-brand-error text-white hover:bg-brand-error/90 focus:ring-brand-error;
+  }
+  
+  .btn-neutral {
+    @apply bg-surface-600 text-white hover:bg-surface-700 focus:ring-surface-600;
   }
   
   .btn-outline {
     @apply border border-surface-300 dark:border-surface-700 hover:bg-surface-100 dark:hover:bg-surface-800 focus:ring-surface-400;
   }
   
+  /* Salesforce Lightning Card Styles */
   .card {
-    @apply bg-white dark:bg-surface-800 rounded-lg shadow-card dark:shadow-none border border-surface-200 dark:border-surface-700 overflow-hidden transition-all duration-200;
+    @apply bg-white dark:bg-surface-800 rounded-md shadow-card dark:shadow-none border border-surface-200 dark:border-surface-700 overflow-hidden transition-all duration-200;
   }
   
+  .card-header {
+    @apply px-3 py-2 border-b border-surface-200 dark:border-surface-700 flex justify-between items-center;
+  }
+  
+  .card-body {
+    @apply p-3;
+  }
+  
+  .card-footer {
+    @apply px-3 py-2 border-t border-surface-200 dark:border-surface-700 bg-surface-50 dark:bg-surface-800;
+  }
+  
+  /* Salesforce Lightning Input Styles */
   .input {
-    @apply w-full px-3 py-1.5 rounded-lg border border-surface-300 dark:border-surface-700 bg-white dark:bg-surface-800 
+    @apply w-full px-3 py-2 rounded-md border border-surface-300 dark:border-surface-700 bg-white dark:bg-surface-800 
            focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent
            text-surface-800 dark:text-surface-200 placeholder-surface-400 text-sm
            transition-all duration-200;
   }
   
+  /* Salesforce Lightning Badge Styles */
   .badge {
-    @apply inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium;
+    @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium;
   }
   
   .badge-primary {
-    @apply bg-primary-light/20 text-primary-dark dark:bg-primary-dark/30 dark:text-primary-light;
+    @apply bg-primary/10 text-primary dark:bg-primary-dark/30 dark:text-primary-light;
   }
   
   .badge-secondary {
-    @apply bg-secondary-light/20 text-secondary-dark dark:bg-secondary-dark/30 dark:text-secondary-light;
+    @apply bg-secondary/10 text-secondary dark:bg-secondary-dark/30 dark:text-secondary-light;
   }
   
-  /* Compact UI elements */
+  .badge-success {
+    @apply bg-brand-success/10 text-brand-success dark:bg-brand-success/30 dark:text-brand-success;
+  }
+  
+  .badge-warning {
+    @apply bg-brand-warning/10 text-surface-800 dark:bg-brand-warning/30 dark:text-brand-warning;
+  }
+  
+  .badge-error {
+    @apply bg-brand-error/10 text-brand-error dark:bg-brand-error/30 dark:text-brand-error;
+  }
+  
+  /* Salesforce Lightning Compact Elements */
   .input-compact {
-    @apply py-1 px-2 text-xs pl-6 rounded-lg border border-surface-300 dark:border-surface-700 bg-white dark:bg-surface-800 
+    @apply py-1 px-2 text-xs rounded-md border border-surface-300 dark:border-surface-700 bg-white dark:bg-surface-800 
            focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent
            text-surface-800 dark:text-surface-200 placeholder-surface-400 
-           transition-all duration-200 h-7;
+           transition-all duration-200 h-8;
+  }
+  
+  .slds-input-has-icon {
+    @apply relative;
+  }
+  
+  .slds-input-has-icon input {
+    @apply pl-8;
+  }
+  
+  .slds-input-icon {
+    @apply absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none text-surface-500 dark:text-surface-400;
   }
   
   .btn-compact {
-    @apply py-1 px-2 text-xs rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-offset-1;
+    @apply py-1 px-2 text-xs rounded-md font-medium transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-offset-1;
   }
   
   .card-compact {
@@ -115,6 +171,119 @@
   .mobile-icon {
     @apply w-3 h-3;
   }
+  
+  /* SLDS Data Table */
+  .slds-table {
+    @apply w-full text-sm;
+  }
+  
+  .slds-table th {
+    @apply px-3 py-2 text-left text-xs font-semibold text-surface-600 dark:text-surface-300 border-b border-surface-200 dark:border-surface-700;
+  }
+  
+  .slds-table td {
+    @apply px-3 py-2 border-b border-surface-200 dark:border-surface-700;
+  }
+  
+  .slds-table tr:hover td {
+    @apply bg-surface-50 dark:bg-surface-700;
+  }
+  
+  /* SLDS Stat */
+  .slds-stat {
+    @apply flex flex-col;
+  }
+  
+  .slds-stat-title {
+    @apply text-2xs font-medium text-surface-500 dark:text-surface-400;
+  }
+  
+  .slds-stat-value {
+    @apply text-sm font-semibold text-surface-900 dark:text-white;
+  }
+  
+  .slds-stat-desc {
+    @apply text-2xs text-surface-600 dark:text-surface-400;
+  }
+  
+  /* SLDS Tooltip */
+  .slds-tooltip {
+    @apply absolute bg-surface-800 dark:bg-surface-900 text-white px-2 py-1 rounded text-2xs whitespace-nowrap z-10;
+  }
+  
+  /* SLDS Grid */
+  .slds-grid {
+    @apply flex;
+  }
+  
+  .slds-grid_vertical {
+    @apply flex-col;
+  }
+  
+  .slds-col {
+    @apply flex-1;
+  }
+  
+  /* SLDS Page Header */
+  .slds-page-header {
+    @apply bg-white dark:bg-surface-800 shadow-sm border-b border-surface-200 dark:border-surface-700 px-4 py-2;
+  }
+  
+  /* SLDS Form Element */
+  .slds-form-element {
+    @apply mb-3;
+  }
+  
+  .slds-form-element__label {
+    @apply block text-2xs font-medium text-surface-700 dark:text-surface-300 mb-1;
+  }
+  
+  .slds-form-element__help {
+    @apply text-2xs text-brand-error mt-0.5 flex items-center;
+  }
+  
+  /* SLDS Modal */
+  .slds-modal {
+    @apply fixed inset-0 z-50 flex items-center justify-center;
+  }
+  
+  .slds-modal__backdrop {
+    @apply fixed inset-0 bg-black/30 z-40;
+  }
+  
+  .slds-modal__container {
+    @apply bg-white dark:bg-surface-800 shadow-lg rounded-md z-50 w-full max-w-lg mx-4;
+  }
+  
+  .slds-modal__header {
+    @apply px-4 py-2 border-b border-surface-200 dark:border-surface-700 flex justify-between items-center;
+  }
+  
+  .slds-modal__content {
+    @apply p-4 max-h-[70vh] overflow-y-auto;
+  }
+  
+  .slds-modal__footer {
+    @apply px-4 py-2 border-t border-surface-200 dark:border-surface-700 flex justify-end space-x-2 bg-surface-50 dark:bg-surface-800;
+  }
+  
+  /* SLDS Tabs */
+  .slds-tabs {
+    @apply border-b border-surface-200 dark:border-surface-700 flex;
+  }
+  
+  .slds-tabs__item {
+    @apply px-4 py-2 text-sm font-medium cursor-pointer;
+  }
+  
+  .slds-tabs__item--active {
+    @apply text-primary dark:text-primary-light border-b-2 border-primary dark:border-primary-light;
+  }
+  
+  /* SLDS Spinner */
+  .slds-spinner {
+    @apply w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin;
+  }
 }
 
 @layer utilities {
@@ -128,11 +297,11 @@
   }
   
   .neu-light {
-    box-shadow: 5px 5px 15px #d1d9e6, -5px -5px 15px #ffffff;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
   }
   
   .neu-dark {
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
   }
   
   /* Compact spacing utilities */
@@ -221,5 +390,58 @@
 
   .w-fit {
     width: fit-content;
+  }
+  
+  /* SLDS Specific Utilities */
+  .slds-p-around_small {
+    padding: 0.75rem;
+  }
+  
+  .slds-p-around_medium {
+    padding: 1rem;
+  }
+  
+  .slds-p-around_large {
+    padding: 1.5rem;
+  }
+  
+  .slds-m-around_small {
+    margin: 0.75rem;
+  }
+  
+  .slds-m-around_medium {
+    margin: 1rem;
+  }
+  
+  .slds-m-around_large {
+    margin: 1.5rem;
+  }
+  
+  .slds-text-heading_small {
+    font-size: 1rem;
+    line-height: 1.25rem;
+    font-weight: 700;
+  }
+  
+  .slds-text-heading_medium {
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+    font-weight: 700;
+  }
+  
+  .slds-text-heading_large {
+    font-size: 1.5rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+  }
+  
+  .slds-text-body_small {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  
+  .slds-text-body_regular {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 }

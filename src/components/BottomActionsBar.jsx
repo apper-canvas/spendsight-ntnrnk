@@ -60,10 +60,10 @@ const BottomActionsBar = ({
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop overlay */}
+          {/* Backdrop overlay - SLDS modal backdrop */}
           <motion.div
             key="backdrop"
-            className="fixed inset-0 bg-black/30 z-30"
+            className="slds-modal__backdrop"
             initial="hidden"
             animate="visible"
             exit="exit"
@@ -71,17 +71,17 @@ const BottomActionsBar = ({
             onClick={onClose}
           />
           
-          {/* Action bar */}
+          {/* Action bar - SLDS modal container */}
           <motion.div
             key="actionbar"
-            className={`fixed ${positionClasses[position]} ${heightClasses[height]} bg-white dark:bg-surface-800 shadow-lg rounded-t-lg md:rounded-none z-40 overflow-hidden`}
+            className={`fixed ${positionClasses[position]} ${heightClasses[height]} bg-white dark:bg-surface-800 shadow-card dark:shadow-none border border-surface-200 dark:border-surface-700 rounded-t-md md:rounded-none z-50 overflow-hidden`}
             initial="hidden"
             animate="visible"
             exit="exit"
             variants={positionVariants[position]}
           >
-            {/* Header with title and close button */}
-            <div className="flex items-center justify-between px-4 py-2 border-b border-surface-200 dark:border-surface-700">
+            {/* Header with title and close button - SLDS modal header */}
+            <div className="slds-modal__header">
               <h3 className="text-sm font-medium text-surface-800 dark:text-surface-100">
                 {title}
               </h3>
@@ -94,8 +94,8 @@ const BottomActionsBar = ({
               </button>
             </div>
             
-            {/* Content */}
-            <div className="p-3 overflow-y-auto">
+            {/* Content - SLDS modal content */}
+            <div className="slds-modal__content">
               {children}
             </div>
           </motion.div>

@@ -11,7 +11,7 @@ function NotFound({ isDarkMode, toggleDarkMode }) {
 
   return (
     <div className="min-h-screen flex flex-col bg-surface-50 dark:bg-surface-900 text-surface-800 dark:text-surface-100">
-      <header className="w-full h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between bg-white dark:bg-surface-800 shadow-sm">
+      <header className="slds-page-header flex items-center justify-between h-16">
         <div className="flex items-center">
           <button 
             onClick={() => navigate('/')}
@@ -38,15 +38,15 @@ function NotFound({ isDarkMode, toggleDarkMode }) {
           transition={{ duration: 0.3 }}
           className="max-w-md w-full mx-auto text-center"
         >
-          <div className="mb-8 inline-flex p-4 rounded-full bg-primary/10 dark:bg-primary/20">
-            <NotFoundIcon className="w-12 h-12 text-primary dark:text-primary-light" />
+          <div className="mb-8 inline-flex p-5 rounded-full bg-primary/10 dark:bg-primary/20">
+            <NotFoundIcon className="w-16 h-16 text-primary dark:text-primary-light" />
           </div>
           
-          <h1 className="text-4xl font-bold mb-4 text-surface-900 dark:text-surface-50">
+          <h1 className="slds-text-heading_large mb-4 text-brand-info dark:text-white">
             Page Not Found
           </h1>
           
-          <p className="text-surface-600 dark:text-surface-300 mb-8">
+          <p className="text-surface-600 dark:text-surface-300 mb-8 text-base">
             The page you're looking for doesn't exist or has been moved. Let's get you back on track.
           </p>
           
@@ -54,7 +54,7 @@ function NotFound({ isDarkMode, toggleDarkMode }) {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => navigate('/')}
-            className="btn btn-primary w-full sm:w-auto px-8 py-3"
+            className="btn btn-primary px-8 py-3"
           >
             Return to Dashboard
           </motion.button>

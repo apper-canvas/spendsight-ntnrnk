@@ -23,7 +23,7 @@ const FloatingActionButton = ({
     'center-left': 'top-1/2 -translate-y-1/2 left-4',
   };
   
-  // Size classes
+  // Size classes - using SLDS button size guidelines
   const sizeClasses = {
     'small': 'w-8 h-8',
     'medium': 'w-10 h-10',
@@ -36,13 +36,14 @@ const FloatingActionButton = ({
     'large': 'w-6 h-6',
   };
   
-  // Color classes
+  // Color classes - using SLDS colors
   const colorClasses = {
     'primary': 'bg-primary text-white hover:bg-primary-dark focus:ring-primary',
-    'secondary': 'bg-secondary text-white hover:bg-secondary-dark focus:ring-secondary',
-    'danger': 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-500',
-    'success': 'bg-green-500 text-white hover:bg-green-600 focus:ring-green-500',
-    'neutral': 'bg-surface-700 text-white hover:bg-surface-800 focus:ring-surface-700 dark:bg-surface-600 dark:hover:bg-surface-500',
+    'secondary': 'bg-white border border-primary text-primary hover:bg-primary/5 focus:ring-primary',
+    'success': 'bg-brand-success text-white hover:bg-brand-success/90 focus:ring-brand-success',
+    'warning': 'bg-brand-warning text-surface-800 hover:bg-brand-warning/90 focus:ring-brand-warning',
+    'danger': 'bg-brand-error text-white hover:bg-brand-error/90 focus:ring-brand-error',
+    'neutral': 'bg-surface-600 text-white hover:bg-surface-700 focus:ring-surface-600 dark:bg-surface-600 dark:hover:bg-surface-500',
   };
   
   return (
@@ -50,7 +51,7 @@ const FloatingActionButton = ({
       initial={{ scale: 0.8, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       whileTap={{ scale: 0.95 }}
-      className={`fixed shadow-lg rounded-full ${positionClasses[position]} ${sizeClasses[size]} ${colorClasses[color]} z-20 focus:outline-none focus:ring-2 focus:ring-offset-2 ${className}`}
+      className={`fixed shadow-soft rounded-full ${positionClasses[position]} ${sizeClasses[size]} ${colorClasses[color]} z-20 focus:outline-none focus:ring-2 focus:ring-offset-1 ${className}`}
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -64,12 +65,12 @@ const FloatingActionButton = ({
         </span>
       </div>
       
-      {/* Label tooltip */}
+      {/* Label tooltip - SLDS tooltip */}
       {(showLabel || isHovered) && label && (
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="absolute right-full mr-2 bg-surface-800 dark:bg-surface-900 text-white px-2 py-1 rounded text-2xs whitespace-nowrap"
+          className="slds-tooltip right-full mr-2"
         >
           {label}
         </motion.div>
