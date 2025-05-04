@@ -1,56 +1,35 @@
-import { createContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { createContext, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { setUser, clearUser } from '../store/userSlice'
+import { setUser } from '../store/userSlice'
 
 export const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const [isInitialized, setIsInitialized] = useState(false)
-  
-  useEffect(() => {
-    const { ApperClient, ApperUI } = window.ApperSDK
-    const client = new ApperClient({
-      apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
-      apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
-    })
-    
-    // Initialize but don't show login yet
-    ApperUI.setup(client, {
-      target: '#authentication',
-      clientId: import.meta.env.VITE_APPER_PROJECT_ID,
-      view: 'both',
-      onSuccess: function(user) {
-        if (user && user.isAuthenticated) {
-          dispatch(setUser(user))
-          navigate('/')
-        } else {
-          navigate('/login')
-        }
-      },
-      onError: function(error) {
-        console.error("Authentication failed:", error)
-      }
-    })
-    
-    setIsInitialized(true)
-  }, [dispatch, navigate])
-  
-  const logout = async () => {
-    try {
-      const { ApperUI } = window.ApperSDK
-      await ApperUI.logout()
-      dispatch(clearUser())
-      navigate('/login')
-    } catch (error) {
-      console.error("Logout failed:", error)
+  const [isInitialized, setIsInitialized] = useState(true)
+
+  // Simplified authContext that doesn't enforce authentication
+  // No ApperUI initialization or automatic redirects
+  const contextValue = {
+    isInitialized,
+    // Keep simplified logout function for any components that might still use it
+    logout: () => {
+      console.log("Authentication has been removed, logout is a no-op")
     }
   }
   
+  // Set a default user to ensure isAuthenticated is true in the Redux store
+  // This prevents any remaining auth checks from redirecting
+  useState(() => {
+    dispatch(setUser({ 
+      isAuthenticated: true,
+      name: 'Guest User',
+      email: 'guest@example.com'
+    }))
+  }, [])
+  
   return (
-    <AuthContext.Provider value={{ isInitialized, logout }}>
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   )

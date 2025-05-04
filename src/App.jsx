@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
@@ -23,36 +22,19 @@ function App() {
     setIsDarkMode(prevMode => !prevMode);
   };
 
-  const { isAuthenticated } = useSelector(state => state.user);
-
   return (
     <AuthProvider>
       <div className={isDarkMode ? 'dark' : ''}>
         <Routes>
+          {/* Allow direct access to the dashboard without authentication check */}
           <Route 
             path="/" 
-            element={
-              isAuthenticated ? 
-                <Dashboard isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} /> : 
-                <Navigate to="/login" replace />
-            } 
+            element={<Dashboard isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
           />
-          <Route 
-            path="/login" 
-            element={
-              !isAuthenticated ? 
-                <Login /> : 
-                <Navigate to="/" replace />
-            } 
-          />
-          <Route 
-            path="/signup" 
-            element={
-              !isAuthenticated ? 
-                <Signup /> : 
-                <Navigate to="/" replace />
-            } 
-          />
+          {/* Allow direct access to login page without redirect */}
+          <Route path="/login" element={<Login />} />
+          {/* Allow direct access to signup page without redirect */}
+          <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <div id="authentication" className="hidden"></div>
